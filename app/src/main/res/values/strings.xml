@@ -1,12 +1,3 @@
 <resources>
     <string name="app_name">KitchenInPocket</string>
-    <string name="failed_login">Sorry, failed to login.</string>
-    <string name="invalid_user">Invalid Username or Password.</string>
-    <string name="username">Username:</string>
-    <string name="password">Password:</string>
-    <string name="remember_me">Remember me</string>
-    <string name="auto_login">Automatic Login</string>
-    <string name="register">Register</string>
-    <string name="login">Log in</string>
-    <string name="cancel_auto_login">Don not need to automatically login</string>
 </resources>
