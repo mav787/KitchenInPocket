@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
  * Created by fangwenli on 13/11/2016.
  */
 
+//the adapter to inflate the images on the homepage "Weekly Recommended"
 class CustomPagerAdapter extends PagerAdapter {
 
     Context mContext;
@@ -42,7 +43,7 @@ class CustomPagerAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        imageView.setImageResource(mResources[position]);
+        imageView.setImageResource(mResources[position]); //set the image resource
 
         container.addView(itemView);
 

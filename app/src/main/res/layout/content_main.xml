@@ -24,6 +24,7 @@
         android:textStyle="normal|bold" />
 
     <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="210dp"
         android:layout_below="@+id/textView">
@@ -58,4 +59,36 @@
 
         </LinearLayout>
     </FrameLayout>
+
+    <TextView
+        android:text="What my followings did"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView_following"
+        android:textAppearance="@style/txtstyle"
+        android:textStyle="normal|bold" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/what_my_followings_did"
+        android:id="@+id/imageView2"
+        android:layout_below="@+id/textView_following" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@drawable/add"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/addRecipeButton"
+        app:backgroundTint="@android:color/white"
+        app:fabSize="mini"
+        android:onClick="addRecipe"/>
+
+
 </RelativeLayout>

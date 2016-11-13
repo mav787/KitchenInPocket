@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     private int login = 0;
     private String username = "";
     private String password = "";
+    FloatingActionButton addRecipeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,9 @@ public class MainActivity extends AppCompatActivity
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mCustomPagerAdapter);
+
+        //addRecipe button
+        addRecipeButton = (FloatingActionButton)findViewById(R.id.addRecipeButton);
 
     }
 
@@ -165,5 +169,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onQueryTextChange(String newText) {
         // User changed the text
         return false;
+    }
+
+    //the click event of addRecipeButton, go to add recipe activity
+    public void addRecipe(View view){
+        Intent intent = new Intent(this, AddRecipeActivity.class);
+        startActivity(intent);
     }
 }
