@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,12 +24,12 @@ import android.widget.Toast;
 import static android.content.Context.*;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     private int login = 0;
     private String username = "";
-    private String accesstoken = "";
-    SharedPreferences shared = null;
+    private String password = "";
+    FloatingActionButton addRecipeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +37,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        shared = getSharedPreferences("login", MODE_PRIVATE);
-        int isAuto = shared.getInt("isAuto",0);
-        if(isAuto == 1) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // TODO Auto-generated method stub
-                    try {
-                        (findViewById(R.id.drawer_layout)).setVisibility(View.GONE);
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,15 +47,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("login", 0);
+        editor.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         {
             public void onDrawerOpened(View drawerView) {
-
-                if(shared.getInt("login", 0) == 1)
+                SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
+                if(sharedPreferences.getInt("login", 0) == 1)
                 {
-                    username = shared.getString("user","");
+                    username = sharedPreferences.getString("user","");
                     TextView uname = (TextView) findViewById(R.id.username);
                     uname.setText(username);
                 }
@@ -85,7 +73,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //View Pager, the image on homepage changes, weekly recommended
+        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this);
 
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mCustomPagerAdapter);
+
+        //addRecipe button
+        addRecipeButton = (FloatingActionButton)findViewById(R.id.addRecipeButton);
 
     }
 
@@ -103,7 +98,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -152,10 +152,11 @@ public class MainActivity extends AppCompatActivity
 
     public boolean notAuto()
     {
-
-        shared.edit().putInt("login", 0);
-        shared.edit().putInt("auto", 0);
-        shared.edit().commit();
+        SharedPreferences shared = getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putInt("login", 0);
+        editor.putInt("auto", 0);
+        editor.commit();
         return true;
     }
 
@@ -165,9 +166,30 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onQueryTextSubmit(String query) {
+        // User pressed the search button
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        // User changed the text
+        return false;
+    }
+
+    //the click event of addRecipeButton, go to add recipe activity
+    public void addRecipe(View view){
+        Intent intent = new Intent(this, AddRecipeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        shared.edit().putInt("login",0);
-        shared.edit().commit();
+        SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("login", 0);
+        editor.commit();
     }
+    
 }

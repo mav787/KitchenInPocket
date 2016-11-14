@@ -91,11 +91,12 @@ public class LoginActivity extends Activity {
                 public void run() {
                     // TODO Auto-generated method stub
                     try {
-                        main.setVisibility(View.GONE);
-                        auto.setVisibility(View.VISIBLE);
                         str_user = shared.getString("username","");
                         str_pass = shared.getString("password", "");
                         LoginRequest();
+                        //main.setVisibility(View.GONE);
+                        //auto.setVisibility(View.VISIBLE);
+
 
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
