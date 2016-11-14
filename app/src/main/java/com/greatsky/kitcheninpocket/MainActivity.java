@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity
 
     private int login = 0;
     private String username = "";
-    private String password = "";
+    private String accesstoken = "";
+    SharedPreferences shared = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,25 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        shared = getSharedPreferences("login", MODE_PRIVATE);
+        int isAuto = shared.getInt("isAuto",0);
+        if(isAuto == 1) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    try {
+                        (findViewById(R.id.drawer_layout)).setVisibility(View.GONE);
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,10 +68,10 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         {
             public void onDrawerOpened(View drawerView) {
-                SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
-                if(sharedPreferences.getInt("login", 0) == 1)
+
+                if(shared.getInt("login", 0) == 1)
                 {
-                    username = sharedPreferences.getString("user","");
+                    username = shared.getString("user","");
                     TextView uname = (TextView) findViewById(R.id.username);
                     uname.setText(username);
                 }
@@ -132,7 +152,8 @@ public class MainActivity extends AppCompatActivity
 
     public boolean notAuto()
     {
-        SharedPreferences shared = getSharedPreferences("login", MODE_PRIVATE);
+
+        shared.edit().putInt("login", 0);
         shared.edit().putInt("auto", 0);
         shared.edit().commit();
         return true;
@@ -141,5 +162,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        shared.edit().putInt("login",0);
+        shared.edit().commit();
     }
 }
