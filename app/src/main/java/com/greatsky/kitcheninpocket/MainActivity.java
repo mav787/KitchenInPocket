@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_login) {
-            // Handle the camera action
             notAuto();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -137,8 +136,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_myInfo) {
+            Intent intent = new Intent(MainActivity.this, MyInfoActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -191,5 +191,5 @@ public class MainActivity extends AppCompatActivity
         editor.putInt("login", 0);
         editor.commit();
     }
-    
+
 }

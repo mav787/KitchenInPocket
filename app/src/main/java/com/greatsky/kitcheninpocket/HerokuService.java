@@ -20,4 +20,6 @@ public interface HerokuService {
 
     @POST("/api/v1/users/login")
     Call<ResponseBody> login(@Body User user);
+    @POST("/api/v1/users")
+    Call<ResponseBody> register(@Body Registration registration);
 }

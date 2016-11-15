@@ -58,6 +58,7 @@ public class LoginActivity extends Activity {
     private Button login = null;
     private LinearLayout main = null;
     private TextView auto = null;
+    private TextView register = null;
 
     private String str_user, str_pass = null;
 
@@ -165,6 +166,13 @@ public class LoginActivity extends Activity {
 
             }
         });
+        register.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private boolean isLogin() {
@@ -188,6 +196,7 @@ public class LoginActivity extends Activity {
         auto_login = (CheckBox) findViewById(R.id.auto_login);
         auto = (TextView) findViewById(R.id.auto);
         main = (LinearLayout) findViewById(R.id.activity_login);
+        register = (TextView)findViewById(R.id.login_register);
     }
 
     @Override
