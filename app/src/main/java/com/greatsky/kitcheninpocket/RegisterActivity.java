@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.greatsky.kitcheninpocket.object.Registration;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 

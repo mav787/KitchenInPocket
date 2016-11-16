@@ -1,12 +1,13 @@
 package com.greatsky.kitcheninpocket;
 
+import com.greatsky.kitcheninpocket.object.Registration;
+import com.greatsky.kitcheninpocket.object.User;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * Created by lshbritta on 16/11/13.

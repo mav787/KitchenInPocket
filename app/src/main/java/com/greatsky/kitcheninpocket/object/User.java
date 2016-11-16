@@ -1,4 +1,4 @@
-package com.greatsky.kitcheninpocket;
+package com.greatsky.kitcheninpocket.object;
 
 /**
  * Created by lshbritta on 16/11/13.
