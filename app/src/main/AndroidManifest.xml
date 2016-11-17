@@ -37,7 +37,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".AddRecipeActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MyInfoActivity"></activity>
+        <activity android:name=".MyInfoActivity" />
+        <activity android:name=".ChangePasswordActivity"></activity>
     </application>
 
 </manifest>
