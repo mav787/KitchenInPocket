@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity
         //addRecipe button
         addRecipeButton = (FloatingActionButton)findViewById(R.id.addRecipeButton);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("");
+
     }
 
     @Override
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
+        searchView.setQueryHint("search recipes or ingredients...");
 
         return true;
     }
