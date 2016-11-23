@@ -23,42 +23,13 @@
         android:textAppearance="@style/txtstyle"
         android:textStyle="normal|bold" />
 
-    <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:layout_below="@+id/textView">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
+        android:layout_below="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="180dp" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:gravity="center" >
+        android:layout_height="210dp" />
 
-            <View
-                android:id="@+id/v_dot0"
-                style="@style/dot_style"
-                android:background="@drawable/dot_focused"
-                android:visibility="visible" />
-
-            <View
-                android:id="@+id/v_dot1"
-                style="@style/dot_style"
-                android:visibility="visible"/>
-
-            <View
-                android:id="@+id/v_dot2"
-                style="@style/dot_style"
-                android:visibility="visible"/>
-
-        </LinearLayout>
-    </FrameLayout>
 
     <TextView
         android:text="What my followings did"

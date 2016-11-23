@@ -2,11 +2,14 @@ package com.greatsky.kitcheninpocket;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import static android.R.color.black;
 
 /**
  * Created by fangwenli on 13/11/2016.
@@ -43,7 +46,28 @@ class CustomPagerAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
+
+        View dot0 = (View) itemView.findViewById(R.id.v_dot0);
+        View dot1 = (View) itemView.findViewById(R.id.v_dot1);
+        View dot2 = (View) itemView.findViewById(R.id.v_dot2);
+
+
         imageView.setImageResource(mResources[position]); //set the image resource
+
+        switch (position){
+            case 0: dot0.setBackgroundResource(R.drawable.dot_focused);
+                dot1.setBackgroundResource(R.drawable.dot_normal);
+                dot2.setBackgroundResource(R.drawable.dot_normal);
+                break;
+            case 1: dot1.setBackgroundResource(R.drawable.dot_focused);
+                dot0.setBackgroundResource(R.drawable.dot_normal);
+                dot2.setBackgroundResource(R.drawable.dot_normal);
+                break;
+            case 2: dot2.setBackgroundResource(R.drawable.dot_focused);
+                dot0.setBackgroundResource(R.drawable.dot_normal);
+                dot1.setBackgroundResource(R.drawable.dot_normal);
+                break;
+        }
 
         container.addView(itemView);
 

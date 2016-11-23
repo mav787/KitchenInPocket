@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity
         CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this);
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+        
         mViewPager.setAdapter(mCustomPagerAdapter);
 
         //addRecipe button
