@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         addRecipeButton = (FloatingActionButton)findViewById(R.id.addRecipeButton);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("");
+        toolbar.setTitle("Kitchen in Pocket");
 
     }
 
