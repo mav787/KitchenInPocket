@@ -36,4 +36,9 @@
     <string name="failed_to_login">Failed to login.</string>
     <string name="change_password">Change my password</string>
     <string name="my_followers_and_followings">My followers and followings:</string>
+    <string name="old_password">Old Password: </string>
+    <string name="new_password">New Password: </string>
+    <string name="re_new_password">Reenter New Password: </string>
+    <string name="submit">Submit</string>
+    <string name="failed_change_password">Failed to change the password.</string>
 </resources>

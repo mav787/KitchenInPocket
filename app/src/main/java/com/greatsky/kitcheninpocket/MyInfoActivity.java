@@ -24,7 +24,7 @@ public class MyInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_info);
         shared = getSharedPreferences("login", MODE_PRIVATE);
-        str_username = shared.getString("username","");
+        str_username = shared.getString("user","");
 
 
         changepass = (Button)findViewById(R.id.my_info_changepassword);
@@ -40,6 +40,7 @@ public class MyInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
     }
 }
