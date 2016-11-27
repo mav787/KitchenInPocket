@@ -109,7 +109,11 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else
-            Toast.makeText(RegisterActivity.this, getResources().getString(R.string.invalid_user), Toast.LENGTH_SHORT).show();
+            if(result.contains("error"))
+            {
+                String[] msg = result.split("\"");
+                Toast.makeText(RegisterActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+            }
 
     }
 

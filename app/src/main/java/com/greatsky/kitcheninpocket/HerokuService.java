@@ -1,11 +1,14 @@
 package com.greatsky.kitcheninpocket;
 
+import com.greatsky.kitcheninpocket.object.Authorization;
+import com.greatsky.kitcheninpocket.object.ChangePassword;
 import com.greatsky.kitcheninpocket.object.Registration;
 import com.greatsky.kitcheninpocket.object.User;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -23,4 +26,6 @@ public interface HerokuService {
     Call<ResponseBody> login(@Body User user);
     @POST("/api/v1/users")
     Call<ResponseBody> register(@Body Registration registration);
+    @POST("/api/v1/users/changepassword")
+    Call<ResponseBody> changepassword(@Header("access_token") String access_token, @Body ChangePassword changePassword);
 }
