@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/my_info_changepassword"
+            android:background="@color/light_action_bar"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp" />
@@ -39,8 +40,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/my_info_username"
             android:textSize="27dp"
-            android:layout_alignBaseline="@+id/my_info_changepassword"
-            android:layout_alignBottom="@+id/my_info_changepassword"
+            android:layout_above="@+id/my_info_myfollowers_and_following"
             android:layout_alignParentStart="true" />
 
 
