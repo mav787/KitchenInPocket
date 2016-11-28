@@ -1,14 +1,18 @@
 package com.greatsky.kitcheninpocket;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,6 +25,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.*;
 
@@ -38,6 +45,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setBackgroundDrawable(
+                new ColorDrawable(Color.parseColor("#f76755")));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +85,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //View Pager, the image on homepage changes, weekly recommended
-        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this);
+        List<CustomObject> items = new ArrayList<CustomObject>();
+        items.add(new CustomObject("Homemade Cake"));
+        items.add(new CustomObject("Afternoon Tea"));
+        items.add(new CustomObject("Seafood"));
+        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, items);
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
         

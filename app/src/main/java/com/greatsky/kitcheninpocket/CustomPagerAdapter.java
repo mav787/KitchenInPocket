@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.List;
 
 import static android.R.color.black;
 
@@ -19,6 +22,7 @@ import static android.R.color.black;
 class CustomPagerAdapter extends PagerAdapter {
 
     Context mContext;
+    List<CustomObject> items;
     LayoutInflater mLayoutInflater;
     int[] mResources = {
             R.drawable.first,
@@ -26,9 +30,10 @@ class CustomPagerAdapter extends PagerAdapter {
             R.drawable.third
     };
 
-    public CustomPagerAdapter(Context context) {
+    public CustomPagerAdapter(Context context, List<CustomObject> items) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.items = items;
     }
 
     @Override
@@ -68,6 +73,10 @@ class CustomPagerAdapter extends PagerAdapter {
                 dot1.setBackgroundResource(R.drawable.dot_normal);
                 break;
         }
+
+        TextView bottomTextItem = (TextView) itemView.findViewById(R.id.bottomText);
+        CustomObject customObject = items.get(position);
+        bottomTextItem.setText(customObject.bottom);
 
         container.addView(itemView);
 

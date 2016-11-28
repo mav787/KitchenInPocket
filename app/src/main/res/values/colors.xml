@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="gray">#f5f4f2</color>
     <color name="logo_color">#ae452e</color>
+    <color name="red_orange">#f76755</color>
+    <color name="light_logo">#e6c8c2</color>
+    <color name="light_action_bar">#f99385</color>
+    <color name="text_color">#525247</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.greatsky.kitcheninpocket;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.register_username);
         password = (EditText)findViewById(R.id.register_pass);
         repassword = (EditText)findViewById(R.id.register_repass);
+        password.setTypeface(Typeface.SANS_SERIF);
+        repassword.setTypeface(Typeface.SANS_SERIF);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
