@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/light_logo</item>
+        <item name="colorPrimary">@color/red_orange</item>
         <item name="colorPrimaryDark">@color/light_action_bar</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>

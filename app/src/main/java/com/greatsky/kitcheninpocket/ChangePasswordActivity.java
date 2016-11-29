@@ -78,10 +78,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 .build();
 
         HerokuService restAPI = retrofit.create(HerokuService.class);
-        ChangePassword changePassword = new ChangePassword(str_old, str_new, str_renew);
         String access_token = shared.getString("access_token","");
+        ChangePassword changePassword = new ChangePassword(access_token, str_old, str_new, str_renew);
         //Authorization authorization = new Authorization(access_token);
-        Call<ResponseBody> call = restAPI.changepassword(access_token, changePassword);
+        Call<ResponseBody> call = restAPI.changepassword(changePassword);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -113,6 +113,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else
-            Toast.makeText(ChangePasswordActivity.this, getResources().getString(R.string.failed_change_password), Toast.LENGTH_SHORT).show();
+        if(result.contains("error"))
+        {
+            String[] msg = result.split("\"");
+            Toast.makeText(ChangePasswordActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+        }
     }
 }

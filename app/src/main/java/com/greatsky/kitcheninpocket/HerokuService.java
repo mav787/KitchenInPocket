@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 /**
  * Created by lshbritta on 16/11/13.
@@ -26,6 +27,6 @@ public interface HerokuService {
     Call<ResponseBody> login(@Body User user);
     @POST("/api/v1/users")
     Call<ResponseBody> register(@Body Registration registration);
-    @POST("/api/v1/users/changepassword")
-    Call<ResponseBody> changepassword(@Header("access_token") String access_token, @Body ChangePassword changePassword);
+    @PUT("/api/v1/users/changepassword")
+    Call<ResponseBody> changepassword(@Body ChangePassword changePassword);
 }
