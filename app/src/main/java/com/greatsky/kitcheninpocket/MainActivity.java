@@ -23,6 +23,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //set actionbar's color
         getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(Color.parseColor("#f76755")));
 
@@ -93,6 +96,14 @@ public class MainActivity extends AppCompatActivity
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setTitle("Kitchen in Pocket");
+
+        //listview
+        ArrayList<Integer> images = new ArrayList<>();
+        images.add(R.drawable.what_my_followings_did);
+        images.add(R.drawable.what_my_followings_did);
+        ListView listView = (ListView)findViewById(R.id.listview);
+        MyListviewAdapter adapter = new MyListviewAdapter(MainActivity.this, images);
+        listView.setAdapter(adapter);
 
     }
 
