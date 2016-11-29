@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(Color.parseColor("#f76755")));
 
-        
+
 
         SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

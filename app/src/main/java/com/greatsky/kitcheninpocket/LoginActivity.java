@@ -166,6 +166,7 @@ public class LoginActivity extends Activity {
         if(result.contains("success")) {
             String[] split = result.split("\\}|\\{|:");
             accesstoken = split[5];
+            accesstoken = accesstoken.substring(1, accesstoken.length()-1);
             editor.putString("access_token",accesstoken);
             editor.commit();
             return true;

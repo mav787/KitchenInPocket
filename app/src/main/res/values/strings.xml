@@ -34,7 +34,7 @@
     <string name="re_password">Please re-enter your password:</string>
     <string name="cancel">cancel</string>
     <string name="failed_to_login">Failed to login.</string>
-    <string name="change_password">Change my password</string>
+    <string name="change_password">Change Password</string>
     <string name="my_followers_and_followings">My followers and followings:</string>
     <string name="old_password">Old Password: </string>
     <string name="new_password">New Password: </string>
