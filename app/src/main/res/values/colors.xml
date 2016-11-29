@@ -9,4 +9,5 @@
     <color name="light_logo">#e6c8c2</color>
     <color name="light_action_bar">#f99385</color>
     <color name="text_color">#525247</color>
+    <color name="light_gray">#96c4c4ba</color>
 </resources>

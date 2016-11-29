@@ -22,6 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView"
+        android:layout_marginLeft="10dp"
         android:textAppearance="@style/txtstyle"
         android:textStyle="normal|bold"
         />
@@ -29,9 +30,11 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_below="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="200dp"
         />
 
 
@@ -41,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
         android:id="@+id/textView_following"
         android:textAppearance="@style/txtstyle"
         android:textStyle="normal|bold"
