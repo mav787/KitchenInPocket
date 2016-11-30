@@ -4,31 +4,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_login"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/chefhat"
             android:title="Log in/out" />
         <item
             android:id="@+id/nav_myMenu"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/weighter"
             android:title="My Menu" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/dish"
             android:title="Slideshow" />
         <item
             android:id="@+id/nav_myInfo"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/fork"
             android:title="My Profile" />
     </group>
 
     <item android:title="About this App">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:id="@+id/nav_instruction"
+                android:icon="@drawable/hands"
                 android:title="Instructions" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                android:id="@+id/nav_aboutus"
+                android:icon="@drawable/oven"
                 android:title="About us" />
         </menu>
     </item>
