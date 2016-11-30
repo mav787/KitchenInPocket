@@ -18,7 +18,9 @@
                 android:layout_height="match_parent"
                 android:id="@+id/imageView"
                 android:alpha="1"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:clickable="true"
+                android:onClick="goToRecipe"/>
 
             <TextView
                 android:layout_alignParentBottom="true"
