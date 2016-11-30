@@ -40,6 +40,10 @@
             android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MyInfoActivity" />
+<<<<<<< HEAD
+        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".RecipeActivity"></activity>
+=======
         <activity android:name=".ChangePasswordActivity" />
         <activity
             android:name=".MenuActivity"
@@ -49,6 +53,7 @@
             android:name=".AboutUsActivity"
             android:label="@string/title_activity_about_us"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+>>>>>>> a85a6d4cb6d5f1ea1b6bbc7ca1eeb8024ce64aa6
     </application>
 
 </manifest>

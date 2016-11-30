@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/ingre1"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="20dp"
+        android:text="Add ingredients here"/>
+
+    <TextView
+        android:id="@+id/amount1"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_toRightOf="@+id/ingre1"
+        android:layout_marginLeft="20dp"
+        android:text="Add amount"/>
+
+    <Button
+        android:id="@+id/add_ingredient_btn"
+        android:layout_toRightOf="@+id/amount1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="+"
+        android:onClick="addIngredient"/>
+
+</RelativeLayout>

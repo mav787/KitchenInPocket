@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -104,6 +105,15 @@ public class MainActivity extends AppCompatActivity
         ListView listView = (ListView)findViewById(R.id.listview);
         MyListviewAdapter adapter = new MyListviewAdapter(MainActivity.this, images);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
+                startActivity(intent);
+//                Toast.makeText(MainActivity.this,"你单击的是第"+(position+1)+"条数据",Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -217,6 +227,12 @@ public class MainActivity extends AppCompatActivity
     //the click event of addRecipeButton, go to add recipe activity
     public void addRecipe(View view){
         Intent intent = new Intent(this, AddRecipeActivity.class);
+        startActivity(intent);
+    }
+
+    //go to recipe
+    public void goToRecipe(View view){
+        Intent intent = new Intent(this, RecipeActivity.class);
         startActivity(intent);
     }
 
