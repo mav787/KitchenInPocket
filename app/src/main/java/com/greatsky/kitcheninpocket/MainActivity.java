@@ -167,6 +167,8 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_myMenu) {
+            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
 
