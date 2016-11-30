@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("login", 0);
-        editor.commit();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -67,6 +66,7 @@ public class MainActivity extends AppCompatActivity
                 if(sharedPreferences.getInt("login", 0) == 1)
                 {
                     username = sharedPreferences.getString("user","");
+
                     TextView uname = (TextView) findViewById(R.id.username);
                     uname.setText(username);
                 }
@@ -157,18 +157,29 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_myMenu) {
-            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-            startActivity(intent);
+            SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
+            if(sharedPreferences.getInt("login", 0) == 1) {
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intent);
+            }
+            else
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.login_first), Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_myInfo) {
-            Intent intent = new Intent(MainActivity.this, MyInfoActivity.class);
+            SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
+            if(sharedPreferences.getInt("login", 0) == 1) {
+                Intent intent = new Intent(MainActivity.this, MyInfoActivity.class);
+                startActivity(intent);
+            }
+            else
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.login_first), Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_instruction) {
+
+        } else if (id == R.id.nav_aboutus) {
+            Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

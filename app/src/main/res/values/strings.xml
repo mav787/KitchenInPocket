@@ -42,4 +42,16 @@
     <string name="submit">Submit</string>
     <string name="failed_change_password">Failed to change the password.</string>
     <string name="title_activity_menu">Menus(%1$s)</string>
+    <string name="login_first">Please Login first!</string>
+    <string name="title_activity_about_us">About Us</string>
+    <string name="large_text">
+        "\tKitchen in Pocket allows you to share your recipes with others anytime, anywhere. This application was developed by the group "GreatSky".\n"
+
+        "\tThe group members are Haotian Sun, HongJi Chen, Sihang Lu, Wenli Fang.(alphabetical order)\n"
+
+        "\tWe value your feedback! Please email your questions and suggestions to greatsky@gmail.com.\n\n"
+
+        "* Important note: \n  Kitchen in Pocket is a free service. Extra data charges may apply when using any website on your mobile device depending on your service plan.\n"
+
+    </string>
 </resources>
