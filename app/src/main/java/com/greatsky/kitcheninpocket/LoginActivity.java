@@ -56,6 +56,7 @@ public class LoginActivity extends Activity {
     private int isLogIn = 0;
     private String result = "";
     private String accesstoken = "";
+    private String userid = "";
 
 
     @Override
@@ -164,10 +165,12 @@ public class LoginActivity extends Activity {
     private boolean isLogin() {
 
         if(result.contains("success")) {
-            String[] split = result.split("\\}|\\{|:");
-            accesstoken = split[5];
+            String[] split = result.split("\\}|\\{|:|,");
+            userid = split[8];
+            accesstoken = split[6];
             accesstoken = accesstoken.substring(1, accesstoken.length()-1);
             editor.putString("access_token",accesstoken);
+            editor.putString("userid", userid);
             editor.commit();
             return true;
         }

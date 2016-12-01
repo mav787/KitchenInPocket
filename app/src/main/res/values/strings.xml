@@ -35,7 +35,8 @@
     <string name="cancel">cancel</string>
     <string name="failed_to_login">Failed to login.</string>
     <string name="change_password">Change Password</string>
-    <string name="my_followers_and_followings">My followers and followings:</string>
+    <string name="my_followers">My followers</string>
+    <string name="my_following">My followings</string>
     <string name="old_password">Old Password: </string>
     <string name="new_password">New Password: </string>
     <string name="re_new_password">Reenter New Password: </string>
@@ -54,4 +55,7 @@
         "* Important note: \n  Kitchen in Pocket is a free service. Extra data charges may apply when using any website on your mobile device depending on your service plan.\n"
 
     </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

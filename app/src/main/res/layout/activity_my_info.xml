@@ -15,57 +15,95 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-        android:text="@string/my_followers_and_followings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/my_info_myfollowers_and_following"
-            android:layout_below="@+id/my_info_changepassword"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="24dp" />
 
-        <Button
-            android:text="@string/change_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/my_info_changepassword"
-            android:background="@color/light_action_bar"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
+        <LinearLayout
+            android:id="@+id/ll_bottom_tab"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:baselineAligned="true">
 
-            android:layout_marginEnd="16dp" />
+            <RelativeLayout
+                android:id="@+id/get_my_follower_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0" >
+
+                <ImageView
+                    android:id="@+id/get_my_follower_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:src="@drawable/follower"
+                    android:contentDescription="@null"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/get_my_following_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0" >
+
+                <ImageView
+                    android:id="@+id/get_my_following_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/following"
+                    android:contentDescription="@null" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/my_info_username"
+            android:textColor="@color/logo_color"
             android:textSize="27dp"
-            android:layout_above="@+id/my_info_myfollowers_and_following"
-            android:layout_alignParentStart="true" />
+            android:textStyle="bold"
+            android:layout_alignBottom="@+id/my_info_changepassword"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="27dp" />
 
+
+        <LinearLayout
+            android:layout_margin="15dp"
+
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/line"
+            android:layout_below="@+id/my_info_username"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@id/ll_bottom_tab"
+             />
+
+        <TextView
+            android:text="@string/change_password"
+            android:textColor="@color/red_orange"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/my_info_changepassword"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/content_layout"
+            android:layout_marginTop="12dp" />
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_below="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
 
 
-        <ListView
-            android:layout_width="175dp"
-            android:id="@+id/my_info_myfollowers"
-            android:layout_height="396dp" />
-
-        <ListView
-        android:layout_width="165dp"
-        android:layout_height="398dp"
-        android:id="@+id/my_info_myfollowings"
-         />
-
-
-
-    </LinearLayout>
 </LinearLayout>

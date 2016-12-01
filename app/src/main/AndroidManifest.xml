@@ -40,7 +40,7 @@
             android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MyInfoActivity" />
-
+        <activity android:name=".RecipeActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity
             android:name=".MenuActivity"
