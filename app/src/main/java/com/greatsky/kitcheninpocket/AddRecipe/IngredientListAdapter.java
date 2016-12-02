@@ -1,12 +1,14 @@
-package com.greatsky.kitcheninpocket;
+package com.greatsky.kitcheninpocket.AddRecipe;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.greatsky.kitcheninpocket.AddRecipe.Ingredients;
+import com.greatsky.kitcheninpocket.R;
 
 import java.util.ArrayList;
 
