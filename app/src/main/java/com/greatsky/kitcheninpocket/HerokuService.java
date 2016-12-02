@@ -1,5 +1,7 @@
 package com.greatsky.kitcheninpocket;
 
+import android.database.Observable;
+
 import com.greatsky.kitcheninpocket.object.Authorization;
 import com.greatsky.kitcheninpocket.object.ChangePassword;
 import com.greatsky.kitcheninpocket.object.Follow;
@@ -18,6 +20,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by lshbritta on 16/11/13.
@@ -40,4 +43,8 @@ public interface HerokuService {
     Call<ResponseBody> getfollower(@Path("id") String usesrid, @Query("access_token") String authorization);
     @GET("/api/v1/users/{id}/followings")
     Call<ResponseBody> getfollowing(@Path("id") String usesrid, @Query("access_token") String authorization);
+    @GET("/api/v1/users/{id}/recipes")
+    Call<ResponseBody> getrecipes(@Path("id") String usesrid, @Query("access_token") String authorization);
+    @GET("/{url}")
+    Call<ResponseBody> loadimage(@Path("url") String fileUrl);
 }

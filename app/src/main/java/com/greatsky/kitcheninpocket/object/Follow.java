@@ -1,5 +1,7 @@
 package com.greatsky.kitcheninpocket.object;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by lshbritta on 16/11/30.
  */
@@ -22,7 +24,11 @@ public class Follow {
     }
 
     public String getCreatetime() {
-        return createtime;
+        SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Long time = new Long(createtime);
+        time = time * 1000;
+        String d = format.format(time);
+        return d;
     }
 
     public String getIntro() {
