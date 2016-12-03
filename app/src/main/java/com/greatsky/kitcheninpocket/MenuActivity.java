@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.greatsky.kitcheninpocket.object.Follow;
+import com.greatsky.kitcheninpocket.object.FollowRequest;
 import com.greatsky.kitcheninpocket.object.Menu;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class MenuActivity extends AppCompatActivity {
 
 
     FloatingActionButton fab = null;
-    boolean isFollowed = false;
+    int isFollowed = 0;
     SharedPreferences shared;
     String str_username;
     MenuAdapter mAdapter;
@@ -217,6 +218,15 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userid = intent.getStringExtra("userid");
         str_username = intent.getStringExtra("username");
+        isFollowed = intent.getIntExtra("isfollowed", -1);
+        //0 - user itself
+        //1 - followed
+        //2 - unfollow
+        fab = (FloatingActionButton) findViewById(R.id.user_follow);
+        if (isFollowed == 1)
+            fab.setImageResource(R.drawable.heart1);
+        else
+            fab.setImageResource(R.drawable.heart2);
         shared = getSharedPreferences("login", Context.MODE_PRIVATE);
         access_token = shared.getString("access_token", "");
         mAdapter = new MenuAdapter();
@@ -225,32 +235,131 @@ public class MenuActivity extends AppCompatActivity {
 
         lv.setAdapter(mAdapter);
 
+        if(isFollowed == 0)
+            fab.setVisibility(View.INVISIBLE);
+        else {
 
-        fab = (FloatingActionButton) findViewById(R.id.user_follow);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(isFollowed == false) {
-                    fab.setImageResource(R.drawable.heart1);
-                    isFollowed = true;
-                    Snackbar.make(view, "LIKE THIS", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-                else {
-                    fab.setImageResource(R.drawable.heart2);
-                    isFollowed = false;
-                    Snackbar.make(view, "DON'T LIKE THIS", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isFollowed == 2) {
+                        FollowRequest();
+                    } else {
+                        DeleteFollowRequest();
+                    }
 
-            }
-        });
+                }
+            });
+        }
     }
 
-    protected void followRequest()
+    protected void afterFollowRequest(String result)
+    {
+        if(result.contains("success"))
+        {
+            fab.setImageResource(R.drawable.heart1);
+            isFollowed = 1;
+            Toast.makeText(MenuActivity.this, "LIKE THIS", Toast.LENGTH_SHORT).show();
+        }
+        else
+        if(result.contains("error"))
+        {
+            String[] msg = result.split("\"");
+            Toast.makeText(MenuActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    protected void afterDeleteFollowRequest(String result)
+    {
+        if(result.contains("success"))
+        {
+            fab.setImageResource(R.drawable.heart2);
+            isFollowed = 2;
+            Toast.makeText(MenuActivity.this, "DON'T LIKE THIS ANY MORE", Toast.LENGTH_SHORT).show();
+        }
+        else
+        if(result.contains("error"))
+        {
+            String[] msg = result.split("\"");
+            Toast.makeText(MenuActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    protected void FollowRequest()
     {
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        HerokuService restAPI = retrofit.create(HerokuService.class);
+        FollowRequest fr = new FollowRequest(access_token, userid);
+        Call<ResponseBody> call = restAPI.followrequest(fr);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Log.e("===","return:" + response.body().toString());
+                BufferedSource source = response.body().source();
+                try {
+                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Buffer buffer = source.buffer();
+                result = buffer.clone().readString(Charset.forName("UTF-8"));
+                afterFollowRequest(result);
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("===","failed");
+            }
+        });
+
     }
+
+
+    protected void DeleteFollowRequest()
+    {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        HerokuService restAPI = retrofit.create(HerokuService.class);
+
+        Call<ResponseBody> call = restAPI.deletefollowrequest(access_token, userid);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Log.e("===","return:" + response.body().toString());
+                BufferedSource source = response.body().source();
+                try {
+                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Buffer buffer = source.buffer();
+                result = buffer.clone().readString(Charset.forName("UTF-8"));
+                afterDeleteFollowRequest(result);
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("===","failed");
+            }
+        });
+
+    }
+
 
 
 }

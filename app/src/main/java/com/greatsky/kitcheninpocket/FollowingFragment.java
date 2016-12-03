@@ -173,6 +173,7 @@ public class FollowingFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MenuActivity.class);
                 intent.putExtra("username", mAdapter.getItem(position).getName());
                 intent.putExtra("userid", mAdapter.getItem(position).getId());
+                intent.putExtra("isfollowed", 1);
                 getActivity().startActivity(intent);
             }
         });
