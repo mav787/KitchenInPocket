@@ -4,6 +4,7 @@ import android.database.Observable;
 
 import com.greatsky.kitcheninpocket.object.Authorization;
 import com.greatsky.kitcheninpocket.object.ChangePassword;
+import com.greatsky.kitcheninpocket.object.FavorRequest;
 import com.greatsky.kitcheninpocket.object.Follow;
 import com.greatsky.kitcheninpocket.object.FollowRequest;
 import com.greatsky.kitcheninpocket.object.Registration;
@@ -53,6 +54,14 @@ public interface HerokuService {
     Call<ResponseBody> userinfo(@Path("id") String userid, @Query("access_token") String authorization);
     @POST("/api/v1/follows")
     Call<ResponseBody> followrequest(@Body FollowRequest fr);
-    @POST("/api/v1/follows")
+    @POST("/api/v1/follows/delete")
     Call<ResponseBody> deletefollowrequest(@Body FollowRequest fr);
+    @GET("/api/v1/recipes/{id}")
+    Call<ResponseBody> getrecipe(@Path("id") String id, @Query("access_token") String authorization);
+    @POST("/api/v1/favors")
+    Call<ResponseBody> favorrequest(@Body FavorRequest fr);
+    @POST("/api/v1/favors/delete")
+    Call<ResponseBody> deletefavorrequest(@Body FavorRequest fr);
+    @GET("/api/v1/favors")
+    Call<ResponseBody> getfavors(@Query("access_token") String authorization);
 }
