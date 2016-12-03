@@ -5,6 +5,7 @@ import android.database.Observable;
 import com.greatsky.kitcheninpocket.object.Authorization;
 import com.greatsky.kitcheninpocket.object.ChangePassword;
 import com.greatsky.kitcheninpocket.object.Follow;
+import com.greatsky.kitcheninpocket.object.FollowRequest;
 import com.greatsky.kitcheninpocket.object.Registration;
 import com.greatsky.kitcheninpocket.object.User;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -47,4 +49,10 @@ public interface HerokuService {
     Call<ResponseBody> getrecipes(@Path("id") String usesrid, @Query("access_token") String authorization);
     @GET("/{url}")
     Call<ResponseBody> loadimage(@Path("url") String fileUrl);
+    @GET("/api/v1/users/{id}")
+    Call<ResponseBody> userinfo(@Path("id") String userid, @Query("access_token") String authorization);
+    @POST("/api/v1/follows")
+    Call<ResponseBody> followrequest(@Body FollowRequest fr);
+    @POST("/api/v1/follows")
+    Call<ResponseBody> deletefollowrequest(@Body FollowRequest fr);
 }

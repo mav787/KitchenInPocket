@@ -19,17 +19,29 @@
         android:layout_marginTop="15dp"
         android:text="Add amount"/>
 
-    <Button
-        android:id="@+id/add_ingredient_btn"
-        android:layout_toRightOf="@+id/amount1"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:text="+"
-        android:textColor="#fff"
-        android:background="@color/light_action_bar"
-        android:onClick="addIngredient"/>
+
+    <!--<Button-->
+        <!--android:id="@+id/add_ingredient_btn"-->
+        <!--android:layout_toRightOf="@+id/amount1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:text="+"-->
+        <!--android:onClick="addIngredient"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/add_ingredient_btn"-->
+        <!--android:layout_toRightOf="@+id/amount1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="+"-->
+        <!--android:textColor="#fff"-->
+        <!--android:background="@color/light_action_bar"-->
+        <!--android:onClick="addIngredient"/>-->
+
 
 </RelativeLayout>

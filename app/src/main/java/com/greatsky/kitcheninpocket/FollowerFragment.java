@@ -1,6 +1,7 @@
 package com.greatsky.kitcheninpocket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -39,6 +41,7 @@ public class FollowerFragment extends Fragment {
 
     private ListView followerlv = null;
     private SharedPreferences shared = null;
+    Intent intent;
     String access_token = "";
     String result = "";
     String userid = "";
@@ -73,6 +76,7 @@ public class FollowerFragment extends Fragment {
         public Follow getItem(int position) {
             return list.get(position);
         }
+
 
         @Override
         public long getItemId(int position) {
@@ -167,7 +171,62 @@ public class FollowerFragment extends Fragment {
         mAdapter = new UserAdapter();
         followerlv = (ListView)view.findViewById(R.id.my_follower_listview);
         followerlv.setAdapter(mAdapter);
+        followerlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                intent = new Intent(getActivity(), MenuActivity.class);
+                intent.putExtra("username", mAdapter.getItem(position).getName());
+                intent.putExtra("userid", mAdapter.getItem(position).getId());
+                FollowRequest(mAdapter.getItem(position).getId());
+
+            }
+        });
         return view;
     }
+
+    protected void afterFollowRequest(String result)
+    {
+        if(result.contains("true"))
+            intent.putExtra("isfollowed", 1);
+        else
+            intent.putExtra("isfollowed", 2);
+        getActivity().startActivity(intent);
+    }
+
+    protected void FollowRequest(String Userid)
+    {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        HerokuService restAPI = retrofit.create(HerokuService.class);
+        Call<ResponseBody> call = restAPI.userinfo(Userid, access_token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Log.e("===","return:" + response.body().toString());
+                BufferedSource source = response.body().source();
+                try {
+                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Buffer buffer = source.buffer();
+                result = buffer.clone().readString(Charset.forName("UTF-8"));
+                afterFollowRequest(result);
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("===","failed");
+            }
+        });
+
+    }
+
 
 }

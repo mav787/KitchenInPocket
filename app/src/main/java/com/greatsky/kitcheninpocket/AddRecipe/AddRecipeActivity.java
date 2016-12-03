@@ -47,10 +47,14 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
     StepListAdapter stepListAdapter;
     String ingredient1;
     String amount1;
+
+    //Button btn_submit;
+
     int click = 1;
     private int LOAD_COVER_IMAGE = 1;
     private int REQUEST_PERMISSION = 2;
     private int LOAD_STEP_IMAGE = 3;
+
 
     public void refreshListview(){
 
@@ -93,8 +97,13 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 //        Ingredients i2 = new Ingredients("egg", "1");
 //        Ingredients i3 = new Ingredients("egg", "1");
         items.add(i1);
+
+
+        //btn_submit = (Button)findViewById(R.id.btn_submit);
+
 //        items.add(i2);
 //        items.add(i3);
+
 
 
 
@@ -246,6 +255,13 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 
     }
 
+
+//    public void onClickSubmit(View view){       // function of "SUBMIT" button
+//        // do stuff...
+//    }
+
+
+
     public void addSteps(View view){
         click++;
         Steps tempData = new Steps();
@@ -258,7 +274,10 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
         refreshListview2();
     }
 
+<<<<<<< HEAD
     public void submitRecipe(View view){
 
     }
+=======
+>>>>>>> b7311af018a207df533c39c686d32bf6269aaced
 }
