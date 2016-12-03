@@ -52,7 +52,7 @@ public class IngredientListAdapter extends BaseAdapter {
 
         TextView ingre1 = (TextView)row.findViewById(R.id.ingre1);
         TextView amount1 = (TextView)row.findViewById(R.id.amount1);
-    
+
         Ingredients temp = ingredients.get(i);
 
         ingre1.setText(temp.getIngredient());
