@@ -8,13 +8,42 @@
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:id="@+id/menu_listview_image"
+        android:scaleType="centerInside"
          />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:id="@+id/menu_listview_owner"
+        android:text="recipename"
+        android:id="@+id/menu_listview_name"
         style="@style/txtstyle"/>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textAlignment="center"
+        android:text="ownername"
+        android:id="@+id/menu_listview_owner"
+        style="@style/txtstyle"
+        android:layout_alignParentTop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textAlignment="center"
+            android:text="createtime"
+            android:id="@+id/menu_listview_time"
+            style="@style/txtstyle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </LinearLayout>

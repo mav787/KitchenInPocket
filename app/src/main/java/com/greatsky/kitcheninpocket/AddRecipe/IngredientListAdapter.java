@@ -1,12 +1,14 @@
-package com.greatsky.kitcheninpocket;
+package com.greatsky.kitcheninpocket.AddRecipe;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.greatsky.kitcheninpocket.AddRecipe.Ingredients;
+import com.greatsky.kitcheninpocket.R;
 
 import java.util.ArrayList;
 
@@ -50,7 +52,7 @@ public class IngredientListAdapter extends BaseAdapter {
 
         TextView ingre1 = (TextView)row.findViewById(R.id.ingre1);
         TextView amount1 = (TextView)row.findViewById(R.id.amount1);
-
+    
         Ingredients temp = ingredients.get(i);
 
         ingre1.setText(temp.getIngredient());

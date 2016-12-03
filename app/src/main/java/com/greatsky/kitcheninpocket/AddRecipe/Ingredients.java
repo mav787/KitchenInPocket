@@ -1,4 +1,4 @@
-package com.greatsky.kitcheninpocket;
+package com.greatsky.kitcheninpocket.AddRecipe;
 
 /**
  * Created by fangwenli on 29/11/2016.

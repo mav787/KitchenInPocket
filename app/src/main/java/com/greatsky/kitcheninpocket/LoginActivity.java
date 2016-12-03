@@ -241,7 +241,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("===","failed");
+                Log.e("===","login failed");
             }
         });
 
