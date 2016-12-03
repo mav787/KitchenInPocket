@@ -2,7 +2,6 @@ package com.greatsky.kitcheninpocket;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;

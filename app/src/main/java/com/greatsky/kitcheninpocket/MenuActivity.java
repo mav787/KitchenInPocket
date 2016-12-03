@@ -1,6 +1,7 @@
 package com.greatsky.kitcheninpocket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -98,15 +99,18 @@ public class MenuActivity extends AppCompatActivity {
                 convertView = (LinearLayout)menuInflater.inflate(R.layout.menu_listview_entry,null);
 
             final ImageView image = (ImageView) convertView.findViewById(R.id.menu_listview_image);
-            TextView owner = (TextView)convertView.findViewById(R.id.menu_listview_owner);
-            TextView createtime = (TextView)convertView.findViewById(R.id.menu_listview_time);
             TextView name = (TextView)convertView.findViewById(R.id.menu_listview_name);
 
-            owner.setText(mAdapter.getItem(position).getUser_name());
-            createtime.setText(mAdapter.getItem(position).getCreate_time());
             name.setText(mAdapter.getItem(position).getName());
 
             image.setImageBitmap(mAdapter.getItem(position).getImage());
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        Intent intent = new Intent(MenuActivity.this, RecipeActivity.class);
+                        startActivity(intent);
+                }
+            });
 
             //image.setImageResource(mAdapter.getItem(position).getImagepath());
             //owner.setText(mAdapter.getItem(position).getOwnername());
@@ -198,6 +202,8 @@ public class MenuActivity extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
         }
 
+
+
     }
 
 
@@ -239,4 +245,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
