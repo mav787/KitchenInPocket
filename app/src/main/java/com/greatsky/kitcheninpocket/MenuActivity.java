@@ -333,8 +333,8 @@ public class MenuActivity extends AppCompatActivity {
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         HerokuService restAPI = retrofit.create(HerokuService.class);
-
-        Call<ResponseBody> call = restAPI.deletefollowrequest(access_token, userid);
+        FollowRequest fr = new FollowRequest(access_token, userid);
+        Call<ResponseBody> call = restAPI.deletefollowrequest(fr);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

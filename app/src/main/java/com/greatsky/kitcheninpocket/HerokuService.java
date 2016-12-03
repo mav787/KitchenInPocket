@@ -53,6 +53,6 @@ public interface HerokuService {
     Call<ResponseBody> userinfo(@Path("id") String userid, @Query("access_token") String authorization);
     @POST("/api/v1/follows")
     Call<ResponseBody> followrequest(@Body FollowRequest fr);
-    @DELETE("/api/v1/follows")
-    Call<ResponseBody> deletefollowrequest(@Query("access_token") String authorization, @Query("following_id") String id);
+    @POST("/api/v1/follows")
+    Call<ResponseBody> deletefollowrequest(@Body FollowRequest fr);
 }
