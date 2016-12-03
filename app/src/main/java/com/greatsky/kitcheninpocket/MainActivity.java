@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
 
 
         SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
+        login = sharedPreferences.getInt("login", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,21 +94,28 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle("Kitchen in Pocket");
 
         //listview
-        ArrayList<Integer> images = new ArrayList<>();
-        images.add(R.drawable.what_my_followings_did);
-        images.add(R.drawable.what_my_followings_did);
         ListView listView = (ListView)findViewById(R.id.listview);
-        MyListviewAdapter adapter = new MyListviewAdapter(MainActivity.this, images);
-        listView.setAdapter(adapter);
+        if(login == 0)
+        {
+            listView.setVisibility(View.INVISIBLE);
+            Toast.makeText(MainActivity.this,R.string.login_first,Toast.LENGTH_SHORT).show();
+        }
+        else {
+            ArrayList<Integer> images = new ArrayList<>();
+            images.add(R.drawable.what_my_followings_did);
+            images.add(R.drawable.what_my_followings_did);
+            MyListviewAdapter adapter = new MyListviewAdapter(MainActivity.this, images);
+            listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-                startActivity(intent);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
+                    startActivity(intent);
 //                Toast.makeText(MainActivity.this,"你单击的是第"+(position+1)+"条数据",Toast.LENGTH_SHORT).show();
-            }
-        });
+                }
+            });
+        }
 
     }
 
@@ -172,7 +180,17 @@ public class MainActivity extends AppCompatActivity
             else
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.login_first), Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_myFavor) {
+            SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
+            if(sharedPreferences.getInt("login", 0) == 1) {
+                Intent intent = new Intent(MainActivity.this, FavorActivity.class);
+                intent.putExtra("username", "favored");
+                intent.putExtra("userid", sharedPreferences.getString("userid",""));
+                intent.putExtra("isfavored", 1);
+                startActivity(intent);
+            }
+            else
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.login_first), Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_myInfo) {
             SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);

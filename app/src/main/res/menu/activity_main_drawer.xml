@@ -11,9 +11,9 @@
             android:icon="@drawable/weighter"
             android:title="My Menu" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_myFavor"
             android:icon="@drawable/dish"
-            android:title="Slideshow" />
+            android:title="My Favorite Recipe" />
         <item
             android:id="@+id/nav_myInfo"
             android:icon="@drawable/fork"

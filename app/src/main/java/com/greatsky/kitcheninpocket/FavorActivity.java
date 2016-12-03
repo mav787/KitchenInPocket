@@ -5,34 +5,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.greatsky.kitcheninpocket.object.Follow;
 import com.greatsky.kitcheninpocket.object.FollowRequest;
 import com.greatsky.kitcheninpocket.object.Menu;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -46,11 +37,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class MenuActivity extends AppCompatActivity {
+public class FavorActivity extends AppCompatActivity {
 
 
-    FloatingActionButton fab = null;
-    int isFollowed = 0;
     SharedPreferences shared;
     String str_username;
     MenuAdapter mAdapter;
@@ -122,7 +111,7 @@ public class MenuActivity extends AppCompatActivity {
         {
             if(result.contains("success"))
             {
-                Intent intent = new Intent(MenuActivity.this, RecipeActivity.class);
+                Intent intent = new Intent(FavorActivity.this, RecipeActivity.class);
                 String[] split = result.split("\\}|\\{");
                 split[3].replaceAll("\"","");
                 String[] msg = split[3].split(":");
@@ -132,7 +121,7 @@ public class MenuActivity extends AppCompatActivity {
             else if(result.contains("error"))
             {
                 String[] msg = result.split("\"");
-                Toast.makeText(MenuActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+                Toast.makeText(FavorActivity.this, msg[7], Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -144,7 +133,7 @@ public class MenuActivity extends AppCompatActivity {
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
             HerokuService restAPI = retrofit.create(HerokuService.class);
-            Call<ResponseBody> call = restAPI.getrecipe(id, access_token);
+            Call<ResponseBody> call = restAPI.getfavors(access_token);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -202,7 +191,7 @@ public class MenuActivity extends AppCompatActivity {
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
             HerokuService restAPI = retrofit.create(HerokuService.class);
-            Call<ResponseBody> call = restAPI.getrecipes(userid,access_token);
+            Call<ResponseBody> call = restAPI.getfavors(access_token);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -243,7 +232,7 @@ public class MenuActivity extends AppCompatActivity {
             if(result.contains("error"))
             {
                 String[] msg = result.split("\"");
-                Toast.makeText(MenuActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+                Toast.makeText(FavorActivity.this, msg[7], Toast.LENGTH_SHORT).show();
             }
 
 
@@ -261,22 +250,14 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_favor);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         userid = intent.getStringExtra("userid");
         str_username = intent.getStringExtra("username");
-        isFollowed = intent.getIntExtra("isfollowed", -1);
-        //0 - user itself
-        //1 - followed
-        //2 - unfollow
-        fab = (FloatingActionButton) findViewById(R.id.user_follow);
-        if (isFollowed == 1)
-            fab.setImageResource(R.drawable.heart1);
-        else
-            fab.setImageResource(R.drawable.heart2);
+        shared = getSharedPreferences("login", Context.MODE_PRIVATE);
         access_token = shared.getString("access_token", "");
         mAdapter = new MenuAdapter();
         setTitle("Menu(" + str_username +")");
@@ -284,130 +265,8 @@ public class MenuActivity extends AppCompatActivity {
 
         lv.setAdapter(mAdapter);
 
-        if(isFollowed == 0)
-            fab.setVisibility(View.INVISIBLE);
-        else {
-
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (isFollowed == 2) {
-                        FollowRequest();
-                    } else {
-                        DeleteFollowRequest();
-                    }
-
-                }
-            });
-        }
     }
 
-    protected void afterFollowRequest(String result)
-    {
-        if(result.contains("success"))
-        {
-            fab.setImageResource(R.drawable.heart1);
-            isFollowed = 1;
-            Toast.makeText(MenuActivity.this, "LIKE THIS", Toast.LENGTH_SHORT).show();
-        }
-        else
-        if(result.contains("error"))
-        {
-            String[] msg = result.split("\"");
-            Toast.makeText(MenuActivity.this, msg[7], Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    protected void afterDeleteFollowRequest(String result)
-    {
-        if(result.contains("success"))
-        {
-            fab.setImageResource(R.drawable.heart2);
-            isFollowed = 2;
-            Toast.makeText(MenuActivity.this, "DON'T LIKE THIS ANY MORE", Toast.LENGTH_SHORT).show();
-        }
-        else
-        if(result.contains("error"))
-        {
-            String[] msg = result.split("\"");
-            Toast.makeText(MenuActivity.this, msg[7], Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-
-    protected void FollowRequest()
-    {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        HerokuService restAPI = retrofit.create(HerokuService.class);
-        FollowRequest fr = new FollowRequest(access_token, userid);
-        Call<ResponseBody> call = restAPI.followrequest(fr);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                //Log.e("===","return:" + response.body().toString());
-                BufferedSource source = response.body().source();
-                try {
-                    source.request(Long.MAX_VALUE); // Buffer the entire body.
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Buffer buffer = source.buffer();
-                result = buffer.clone().readString(Charset.forName("UTF-8"));
-                afterFollowRequest(result);
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("===","failed");
-            }
-        });
-
-    }
-
-
-    protected void DeleteFollowRequest()
-    {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        HerokuService restAPI = retrofit.create(HerokuService.class);
-        FollowRequest fr = new FollowRequest(access_token, userid);
-        Call<ResponseBody> call = restAPI.deletefollowrequest(fr);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                //Log.e("===","return:" + response.body().toString());
-                BufferedSource source = response.body().source();
-                try {
-                    source.request(Long.MAX_VALUE); // Buffer the entire body.
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Buffer buffer = source.buffer();
-                result = buffer.clone().readString(Charset.forName("UTF-8"));
-                afterDeleteFollowRequest(result);
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("===","failed");
-            }
-        });
-
-    }
 
 
 
