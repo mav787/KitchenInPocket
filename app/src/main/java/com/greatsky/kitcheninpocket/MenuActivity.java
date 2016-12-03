@@ -213,11 +213,12 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        userid = intent.getStringExtra("userid");
+        str_username = intent.getStringExtra("username");
         shared = getSharedPreferences("login", Context.MODE_PRIVATE);
         access_token = shared.getString("access_token", "");
-        userid = shared.getString("userid", "");
-        shared = getSharedPreferences("login", MODE_PRIVATE);
-        str_username = shared.getString("user","");
         mAdapter = new MenuAdapter();
         setTitle("Menu(" + str_username +")");
         lv = (ListView)findViewById(R.id.menu_listview);
@@ -244,6 +245,11 @@ public class MenuActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    protected void followRequest()
+    {
+
     }
 
 

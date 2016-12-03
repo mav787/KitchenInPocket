@@ -1,6 +1,7 @@
 package com.greatsky.kitcheninpocket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -165,6 +167,15 @@ public class FollowingFragment extends Fragment {
         mAdapter = new UserAdapter();
         followinglv = (ListView)view.findViewById(R.id.my_following_listview);
         followinglv.setAdapter(mAdapter);
+        followinglv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getActivity(), MenuActivity.class);
+                intent.putExtra("username", mAdapter.getItem(position).getName());
+                intent.putExtra("userid", mAdapter.getItem(position).getId());
+                getActivity().startActivity(intent);
+            }
+        });
         return view;
     }
 

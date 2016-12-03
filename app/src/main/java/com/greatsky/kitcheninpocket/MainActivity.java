@@ -175,6 +175,8 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
             if(sharedPreferences.getInt("login", 0) == 1) {
                 Intent intent = new Intent(MainActivity.this, MyInfoActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("userid", sharedPreferences.getString("userid",""));
                 startActivity(intent);
             }
             else
