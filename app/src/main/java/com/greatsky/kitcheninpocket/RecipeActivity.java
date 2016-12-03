@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 
 import com.greatsky.kitcheninpocket.object.FavorRequest;
+import com.greatsky.kitcheninpocket.object.Menu;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -39,11 +42,13 @@ public class RecipeActivity extends Activity{
     ImageView coverPicture, step1Picture, step2Picture, step3Picture;
     ImageButton authorImage;
     FloatingActionButton likeIcon;
-    int isFavored = -1;
+    String isFavored = "";
     SharedPreferences shared;
     String access_token = "";
     String recipeId = "";
     String result = "";
+    String ingredient = "";
+    String step = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,33 +56,39 @@ public class RecipeActivity extends Activity{
         setContentView(R.layout.activity_recipe);
 
         Intent intent = getIntent();
-        isFavored = intent.getIntExtra("isfollowed", -1);
-        recipeId = intent.getStringExtra("recipeId");
+        isFavored = intent.getStringExtra("is_favor");
+        recipeId = intent.getStringExtra("id");
+        ingredient = intent.getStringExtra("ingredient");
+        step = intent.getStringExtra("step");
         shared = getSharedPreferences("login", Context.MODE_PRIVATE);
         access_token = shared.getString("access_token", "");
 
         recipeName = (TextView) findViewById(R.id.recipe_name);
+        recipeName.setText(intent.getStringExtra("name"));
         ingredientContent = (TextView) findViewById(R.id.ingredient_content);
         step1Content = (TextView) findViewById(R.id.step1_content);
         step2Content = (TextView) findViewById(R.id.step2_content);
         step3Content = (TextView) findViewById(R.id.step3_content);
         authorUsername = (TextView) findViewById(R.id.author_username);
+        authorUsername.setText(intent.getStringExtra("user_name"));
 
         coverPicture = (ImageView) findViewById(R.id.cover_picture);
+        asynchronousImageRequest(intent.getStringExtra("picture"));
+
         step1Picture = (ImageView) findViewById(R.id.step1_picture);
         step2Picture = (ImageView) findViewById(R.id.step2_picture);
         step3Picture = (ImageView) findViewById(R.id.step3_picture);
 
         authorImage = (ImageButton) findViewById(R.id.author_image);
         likeIcon = (FloatingActionButton) findViewById(R.id.like_icon);
-        if (isFavored == 1)
+        if (isFavored.equals("true"))
             likeIcon.setImageResource(R.drawable.heart1);
         else
             likeIcon.setImageResource(R.drawable.heart2);
         likeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isFavored == 2) {
+                if (isFavored.equals("false")) {
                     FavorRequest();
                 } else {
                     DeleteFavorRequest();
@@ -87,12 +98,37 @@ public class RecipeActivity extends Activity{
         });
     }
 
+    public void asynchronousImageRequest(String url)
+    {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        HerokuService restAPI = retrofit.create(HerokuService.class);
+        Call<ResponseBody> call = restAPI.loadimage(url);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Log.e("===","return:" + response.body().toString());
+                Bitmap source = BitmapFactory.decodeStream(response.body().byteStream());
+                coverPicture.setImageBitmap(source);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("===","failed");
+            }
+        });
+    }
+
+
     protected void afterFavorRequest(String result)
     {
         if(result.contains("success"))
         {
             likeIcon.setImageResource(R.drawable.heart1);
-            isFavored = 1;
+            isFavored = "true";
             Toast.makeText(RecipeActivity.this, "LIKE THIS", Toast.LENGTH_SHORT).show();
         }
         else
@@ -108,7 +144,7 @@ public class RecipeActivity extends Activity{
         if(result.contains("success"))
         {
             likeIcon.setImageResource(R.drawable.heart2);
-            isFavored = 2;
+            isFavored = "false";
             Toast.makeText(RecipeActivity.this, "DON'T LIKE THIS ANY MORE", Toast.LENGTH_SHORT).show();
         }
         else

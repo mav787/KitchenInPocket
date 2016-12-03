@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.greatsky.kitcheninpocket.object.FollowRequest;
 import com.greatsky.kitcheninpocket.object.Menu;
 
 import java.io.IOException;
@@ -112,11 +111,18 @@ public class FavorActivity extends AppCompatActivity {
             if(result.contains("success"))
             {
                 Intent intent = new Intent(FavorActivity.this, RecipeActivity.class);
-                String[] split = result.split("\\}|\\{");
-                split[3].replaceAll("\"","");
-                String[] msg = split[3].split(":");
-                intent.putExtra(split[2], split[3]);
-                //startActivity(intent);
+                intent.putExtra("is_favor", "true");
+                String[] split = result.split("\\}|\\{",5);
+                String temp = split[3].replaceAll("\"","");
+                String[] msg = temp.split(":|,");
+                for(int i = 0; i < msg.length; i= i + 2)
+                    intent.putExtra(msg[i], msg[i+1]);
+                String[]detail = split[4].split("\\[|\\]");
+                String ingredient = detail[1].replaceAll("\"","");
+                String step = detail[3].replaceAll("\"","");
+                intent.putExtra("ingredient", ingredient);
+                intent.putExtra("step", step);
+                startActivity(intent);
             }
             else if(result.contains("error"))
             {
@@ -133,7 +139,7 @@ public class FavorActivity extends AppCompatActivity {
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
             HerokuService restAPI = retrofit.create(HerokuService.class);
-            Call<ResponseBody> call = restAPI.getfavors(access_token);
+            Call<ResponseBody> call = restAPI.getrecipe(id, access_token);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
