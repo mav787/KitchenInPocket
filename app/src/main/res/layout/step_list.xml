@@ -23,7 +23,7 @@
         android:src="@drawable/step_picture"
         android:scaleType="fitXY"
         android:background="@null"
-        android:onClick="addStep1Picture"/>
+        android:onClick="addStepPicture"/>
 
     <EditText
         android:id="@+id/step_description"

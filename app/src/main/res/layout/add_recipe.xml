@@ -10,6 +10,7 @@
         android:orientation="vertical">
 
         <ImageButton
+            android:id="@+id/cover_pic"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="180dp"
@@ -144,7 +145,8 @@
             android:text="submit"
             android:layout_gravity="center"
             android:background="@color/light_action_bar"
-            android:textColor="#fff"/>
+            android:textColor="#fff"
+            android:onClick="submitRecipe"/>
 
     </LinearLayout>
 </ScrollView>

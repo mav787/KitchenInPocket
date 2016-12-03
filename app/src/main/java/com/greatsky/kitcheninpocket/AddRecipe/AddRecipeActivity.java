@@ -1,21 +1,37 @@
 package com.greatsky.kitcheninpocket.AddRecipe;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.greatsky.kitcheninpocket.R;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by fangwenli on 13/11/2016.
@@ -32,6 +48,9 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
     String ingredient1;
     String amount1;
     int click = 1;
+    private int LOAD_COVER_IMAGE = 1;
+    private int REQUEST_PERMISSION = 2;
+    private int LOAD_STEP_IMAGE = 3;
 
     public void refreshListview(){
 
@@ -94,18 +113,78 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
         stepListAdapter = new StepListAdapter(AddRecipeActivity.this, steps);
         refreshListview2();
         step_list.setAdapter(stepListAdapter);
+
+
     }
 
     public void addCoverPicture(View view){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(
-                "content://media/internal/images/media"));
-        startActivity(intent);
+        int hasWriteContactsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION);
+            return;
+        }
+
+        Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, LOAD_COVER_IMAGE);
     }
 
-    public void addStep1Picture(View view){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(
-                "content://media/internal/images/media"));
-        startActivity(intent);
+
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        if (requestCode == REQUEST_PERMISSION){
+//            if (permissions[0].equals(Manifest.permission.READ_EXTERNAL_STORAGE)
+//                    &&grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                //用户同意使用write
+//                startGetImageThread();
+//            }else{
+//                //用户不同意，自行处理即可
+//                finish();
+//            }
+//        }
+//    }
+
+    public void addStepPicture(View view){
+//        Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(i, LOAD_STEP_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if (requestCode == LOAD_COVER_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            ImageButton cover_pic = (ImageButton) findViewById(R.id.cover_pic);
+            Bitmap original_bitmap = BitmapFactory.decodeFile(picturePath);
+            Bitmap scaled_bitmap = Bitmap.createScaledBitmap(original_bitmap,1000,180,false);
+            cover_pic.setImageBitmap(scaled_bitmap);
+            cover_pic.setScaleType(ImageButton.ScaleType.FIT_XY);
+        }
+
+//        else if (requestCode == LOAD_STEP_IMAGE && resultCode == RESULT_OK && null != data){
+//            Uri selectedImage = data.getData();
+//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            cursor.close();
+//            ImageButton cover_pic = (ImageButton) findViewById(R.id.step_image);
+//            Bitmap original_bitmap = BitmapFactory.decodeFile(picturePath);
+//            Bitmap scaled_bitmap = Bitmap.createScaledBitmap(original_bitmap,1000,180,false);
+//            cover_pic.setImageBitmap(scaled_bitmap);
+//            cover_pic.setScaleType(ImageButton.ScaleType.FIT_XY);
+//        }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
 
@@ -172,13 +251,14 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
         Steps tempData = new Steps();
         tempData.setStep_num(Integer.toString(click));
         tempData.setImage_source(R.drawable.step_picture);
-//        tempData.setTime();
-//                Log.d("M1",expense+"-"+notes+"-"+(new Date()).toString());
+
         steps.add(tempData);
-//                for (ExpenseLogEntryData item : items){
-//                    Log.d("M12", item.getExpense()+"-"+item.getNotes()+"-"+item.getTime());
-//                }
+
         stepListAdapter.notifyDataSetChanged();
         refreshListview2();
+    }
+
+    public void submitRecipe(View view){
+
     }
 }
