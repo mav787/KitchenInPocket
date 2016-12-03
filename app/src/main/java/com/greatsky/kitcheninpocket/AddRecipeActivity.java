@@ -34,6 +34,7 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
     IngredientListAdapter ingredientListAdapter;
     String ingredient1;
     String amount1;
+    Button btn_submit;
 
     public void refreshListview(){
         int totalHeight = 0;
@@ -61,7 +62,7 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
         items.add(i1);
         items.add(i2);
         items.add(i3);
-
+        btn_submit = (Button)findViewById(R.id.btn_submit);
 
 
         listView = (ListView)findViewById(R.id.ingredient_list);
@@ -154,4 +155,10 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
         }
 
     }
+
+    public void onClickSubmit(View view){       // function of "SUBMIT" button
+        // do stuff...
+    }
+
+
 }
