@@ -274,10 +274,8 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
         refreshListview2();
     }
 
-<<<<<<< HEAD
     public void submitRecipe(View view){
 
     }
-=======
->>>>>>> b7311af018a207df533c39c686d32bf6269aaced
+
 }

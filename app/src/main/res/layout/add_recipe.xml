@@ -155,12 +155,10 @@
             android:text="submit"
             android:layout_gravity="center"
             android:background="@color/light_action_bar"
-<<<<<<< HEAD
             android:textColor="#fff"
             android:onClick="submitRecipe"/>
-=======
             android:textColor="#fff" />
->>>>>>> b7311af018a207df533c39c686d32bf6269aaced
+
 
     </LinearLayout>
 </ScrollView>
