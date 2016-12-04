@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.greatsky.kitcheninpocket.HerokuImageService;
 import com.greatsky.kitcheninpocket.HerokuService;
 import com.greatsky.kitcheninpocket.LoginActivity;
+import com.greatsky.kitcheninpocket.MainActivity;
 import com.greatsky.kitcheninpocket.R;
 import com.greatsky.kitcheninpocket.RegisterActivity;
 import com.greatsky.kitcheninpocket.object.Authorization;
@@ -334,7 +335,6 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
             upload_steps.add(step.getDescription());
         }
 
-        uploadRecipeRequest();
     }
 
     protected void uploadRecipeRequest()
@@ -379,8 +379,9 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
     public void afterUploadRecipe()
     {
         if(upload_recipe_result.contains("success")) {
-//            Intent intent = new Intent(AddRecipeActivity.this, Recipe.class);
-//            startActivity(intent);
+            Intent intent = new Intent(AddRecipeActivity.this, MainActivity.class);
+            startActivity(intent);
+            Toast.makeText(AddRecipeActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
         }
         else
         if(upload_recipe_result.contains("error"))
@@ -445,6 +446,7 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
             String temp = upload_img_result.replaceAll("http://kitchen-in-pocket.herokuapp.com/", "lalalala");
             String[] xyz = temp.split("lalalala");
             returned_url = xyz[1].substring(0, xyz[1].length()-5);
+            uploadRecipeRequest();
 
         }
         else if(upload_img_result.contains("error"))
