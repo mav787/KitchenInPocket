@@ -123,11 +123,21 @@ public class MenuActivity extends AppCompatActivity {
             if(result.contains("success"))
             {
                 Intent intent = new Intent(MenuActivity.this, RecipeActivity.class);
-                String[] split = result.split("\\}|\\{");
-                split[3].replaceAll("\"","");
-                String[] msg = split[3].split(":");
-                intent.putExtra(split[2], split[3]);
-                //startActivity(intent);
+                if(result.contains("true"))
+                    intent.putExtra("is_favor", "true");
+                else
+                    intent.putExtra("is_favor", "false");
+                String[] split = result.split("\\}|\\{",5);
+                String temp = split[3].replaceAll("\"","");
+                String[] msg = temp.split(":|,");
+                for(int i = 0; i < msg.length; i= i + 2)
+                    intent.putExtra(msg[i], msg[i+1]);
+                String[]detail = split[4].split("\\[|\\]");
+                String ingredient = detail[1].replaceAll("\"","");
+                String step = detail[3].replaceAll("\"","");
+                intent.putExtra("ingredient", ingredient);
+                intent.putExtra("step", step);
+                startActivity(intent);
             }
             else if(result.contains("error"))
             {
@@ -135,6 +145,8 @@ public class MenuActivity extends AppCompatActivity {
                 Toast.makeText(MenuActivity.this, msg[7], Toast.LENGTH_SHORT).show();
             }
         }
+
+
 
         public void getRecipe(String id)
         {
@@ -277,6 +289,7 @@ public class MenuActivity extends AppCompatActivity {
             fab.setImageResource(R.drawable.heart1);
         else
             fab.setImageResource(R.drawable.heart2);
+        shared = getSharedPreferences("login", Context.MODE_PRIVATE);
         access_token = shared.getString("access_token", "");
         mAdapter = new MenuAdapter();
         setTitle("Menu(" + str_username +")");
