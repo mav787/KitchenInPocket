@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.greatsky.kitcheninpocket.AddRecipe.Ingredients;
 import com.greatsky.kitcheninpocket.R;
 
 import java.util.ArrayList;
@@ -20,10 +19,10 @@ public class IngredientListAdapter extends BaseAdapter {
 
     Context context;
 
-    ArrayList<Ingredients> ingredients;
+    ArrayList<Ingredients_list> ingredients;
 
 
-    public IngredientListAdapter(Context context, ArrayList<Ingredients> arrayList){
+    public IngredientListAdapter(Context context, ArrayList<Ingredients_list> arrayList){
         this.context = context;
 //        sample.add("apple");
 //        sample.add("banana");
@@ -53,7 +52,7 @@ public class IngredientListAdapter extends BaseAdapter {
         TextView ingre1 = (TextView)row.findViewById(R.id.ingre1);
         TextView amount1 = (TextView)row.findViewById(R.id.amount1);
 
-        Ingredients temp = ingredients.get(i);
+        Ingredients_list temp = ingredients.get(i);
 
         ingre1.setText(temp.getIngredient());
         amount1.setText(temp.getAmount());

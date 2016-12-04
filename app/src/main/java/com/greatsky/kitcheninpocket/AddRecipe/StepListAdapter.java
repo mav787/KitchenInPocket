@@ -51,18 +51,13 @@ public class StepListAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.step_list, viewGroup, false);
 
-//        TextView ingre1 = (TextView)row.findViewById(R.id.ingre1);
-//        TextView amount1 = (TextView)row.findViewById(R.id.amount1);
-
         TextView step_num = (TextView)row.findViewById(R.id.step_num);
-        ImageButton step_image = (ImageButton)row.findViewById(R.id.step_image);
-        EditText step_description = (EditText)row.findViewById(R.id.step_description);
+        TextView step_descript = (TextView)row.findViewById(R.id.step_descript);
 
         Steps temp = steps.get(i);
 
         step_num.setText(temp.getStep_num());
-        step_image.setBackgroundResource(temp.getImage_source());
-        step_description.setText(temp.getDescription());
+        step_descript.setText(temp.getDescription());
 
         return row;
     }

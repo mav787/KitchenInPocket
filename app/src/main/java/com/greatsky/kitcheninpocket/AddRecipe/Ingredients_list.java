@@ -4,14 +4,14 @@ package com.greatsky.kitcheninpocket.AddRecipe;
  * Created by fangwenli on 29/11/2016.
  */
 
-public class Ingredients {
+public class Ingredients_list {
 
     private String ingredient;
     private String amount;
 
-    public Ingredients(){}
+    public Ingredients_list(){}
 
-    public Ingredients(String ingredient, String amount){
+    public Ingredients_list(String ingredient, String amount){
         this.ingredient = ingredient;
         this.amount = amount;
 

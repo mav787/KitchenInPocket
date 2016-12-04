@@ -22,6 +22,7 @@
             android:onClick="addCoverPicture"/>
 
         <EditText
+            android:id="@+id/recipe_name"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:hint="Add recipe's name"
@@ -40,83 +41,6 @@
             android:textSize="18sp"
             android:layout_marginTop="15dp"/>
 
-
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<EditText-->
-                <!--android:id="@+id/ingredient1"-->
-                <!--android:layout_width="200dp"-->
-                <!--android:layout_height="35dp"-->
-                <!--android:hint="Add an ingredient"-->
-                <!--android:background="#fff"-->
-                <!--android:layout_marginLeft="20dp"/>-->
-
-            <!--<EditText-->
-                <!--android:layout_toRightOf="@+id/ingredient1"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="35dp"-->
-                <!--android:hint="amount"-->
-                <!--android:background="#fff"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_marginRight="20dp"/>-->
-
-        <!--</RelativeLayout>-->
-
-
-
-        <!--<RelativeLayout-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<EditText-->
-                <!--android:id="@+id/ingredient2"-->
-                <!--android:layout_width="200dp"-->
-                <!--android:layout_height="35dp"-->
-                <!--android:hint="Add an ingredient"-->
-                <!--android:background="#fff"-->
-                <!--android:layout_marginLeft="20dp"/>-->
-
-            <!--<EditText-->
-                <!--android:layout_toRightOf="@+id/ingredient2"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="35dp"-->
-                <!--android:hint="amount"-->
-                <!--android:background="#fff"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_marginRight="20dp"/>-->
-
-        <!--</RelativeLayout>-->
-
-        <!--<RelativeLayout-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<EditText-->
-                <!--android:id="@+id/ingredient3"-->
-                <!--android:layout_width="200dp"-->
-                <!--android:layout_height="35dp"-->
-                <!--android:hint="Add an ingredient"-->
-                <!--android:background="#fff"-->
-                <!--android:layout_marginLeft="20dp"/>-->
-
-            <!--<EditText-->
-                <!--android:layout_toRightOf="@+id/ingredient3"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="35dp"-->
-                <!--android:hint="amount"-->
-                <!--android:background="#fff"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_marginRight="20dp"/>-->
-
-        <!--</RelativeLayout>-->
         <ListView
             android:id="@+id/ingredient_list"
             android:layout_width="match_parent"
@@ -146,6 +70,17 @@
             android:layout_height="wrap_content">
 
         </ListView>
+
+
+        <Button
+            android:id="@+id/add_more_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Add more steps"
+            android:onClick="addSteps"
+            android:background="@color/light_action_bar"
+            android:textColor="#fff"/>
 
         <Button
             android:id="@+id/btn_submit"
