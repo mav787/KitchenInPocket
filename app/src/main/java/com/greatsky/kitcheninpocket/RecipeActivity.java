@@ -148,7 +148,7 @@ public class RecipeActivity extends Activity{
         ingredient = ingredient.replaceAll("\\{|\\}", "");
         String[] ingredients = ingredient.split(":|,");
         ingredient = "";
-        int count = 0;
+        int count = 1;
         for(int i = 0; i < ingredients.length; i = i + 4)
         {
             ingredient = ingredient + count + ": " + ingredients[i+1];
@@ -379,6 +379,4 @@ public class RecipeActivity extends Activity{
         });
 
     }
-
-
 }
