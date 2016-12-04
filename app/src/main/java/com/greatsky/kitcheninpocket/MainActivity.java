@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity
 //            images.add(R.drawable.what_my_followings_did);
 //            MyListviewAdapter adapter = new MyListviewAdapter(MainActivity.this, images);
 //            listView.setAdapter(adapter);
-            mAdapter = new MenuAdapter();
-            listView.setAdapter(mAdapter);
+//            mAdapter = new MenuAdapter();
+//            listView.setAdapter(mAdapter);
 
 //            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                @Override

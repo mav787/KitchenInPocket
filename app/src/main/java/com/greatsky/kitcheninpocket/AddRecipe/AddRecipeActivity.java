@@ -443,7 +443,7 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
     {
         if(upload_img_result.contains("success")) {
 
-            String temp = upload_img_result.replaceAll("http://kitchen-in-pocket.herokuapp.com/", "lalalala");
+            String temp = upload_img_result.replaceAll("\"url\":\"", "lalalala");
             String[] xyz = temp.split("lalalala");
             returned_url = xyz[1].substring(0, xyz[1].length()-5);
             uploadRecipeRequest();
