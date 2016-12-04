@@ -251,7 +251,6 @@ public class RecipeActivity extends Activity{
     public void asynchronousImageRequest(String url)
     {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
