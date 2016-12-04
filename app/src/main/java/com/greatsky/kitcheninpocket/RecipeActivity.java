@@ -251,11 +251,13 @@ public class RecipeActivity extends Activity{
     public void asynchronousImageRequest(String url)
     {
         Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://res.cloudinary.com/hsayf1nxm/image/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         HerokuService restAPI = retrofit.create(HerokuService.class);
-        Call<ResponseBody> call = restAPI.loadimage(url);
+        String[] temp = url.split("image");
+        Call<ResponseBody> call = restAPI.loadimage(temp[1].substring(1, temp[1].length()));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

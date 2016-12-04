@@ -445,7 +445,7 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 
             String temp = upload_img_result.replaceAll("\"url\":\"", "lalalala");
             String[] xyz = temp.split("lalalala");
-            returned_url = xyz[1].substring(0, xyz[1].length()-5);
+            returned_url = xyz[1].substring(0, xyz[1].length()-3);
             uploadRecipeRequest();
 
         }

@@ -115,8 +115,14 @@ public class FavorActivity extends AppCompatActivity {
                 String[] split = result.split("\\}|\\{",5);
                 String temp = split[3].replaceAll("\"","");
                 String[] msg = temp.split(":|,");
-                for(int i = 0; i < msg.length; i= i + 2)
-                    intent.putExtra(msg[i], msg[i+1]);
+                for(int i = 0; i < msg.length; i= i + 2) {
+                    if(msg[i].equals("picture")) {
+                        intent.putExtra(msg[i], msg[i + 1] + ":" + msg[i + 2]);
+                        i++;
+                    }
+                    else intent.putExtra(msg[i], msg[i + 1]);
+
+                }
                 String[]detail = split[4].split("\\[|\\]");
                 String ingredient = detail[1].replaceAll("\"","");
                 String step = detail[3].replaceAll("\"","");
@@ -166,11 +172,13 @@ public class FavorActivity extends AppCompatActivity {
         public void asynchronousImageRequest(final String[] info)
         {
             Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://res.cloudinary.com/hsayf1nxm/image/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
             HerokuService restAPI = retrofit.create(HerokuService.class);
-            Call<ResponseBody> call = restAPI.loadimage(url);
+            String[] temp = url.split("image");
+            Call<ResponseBody> call = restAPI.loadimage(temp[1].substring(1, temp[1].length()));
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -228,7 +236,7 @@ public class FavorActivity extends AppCompatActivity {
                 for(; i < split.length; i+= 2)
                 {
                     String[] info = split[i].split(":|,");
-                    url = info[11].substring(1, info[11].length()-1);
+                    url = info[11].substring(1, info[11].length()) + ":" + info[12].substring(0,info[12].length()-1);
                     asynchronousImageRequest(info);
                 }
                 update();

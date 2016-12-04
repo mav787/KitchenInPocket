@@ -52,7 +52,7 @@ public interface HerokuService {
     @GET("/api/v1/homeline")
     Call<ResponseBody> gethomeline(@Query("access_token") String authorization);
     @GET("{url}")
-    Call<ResponseBody> loadimage(@Path("url") String fileUrl);
+    Call<ResponseBody> loadimage(@Path("url") String url);
     @GET("/api/v1/users/{id}")
     Call<ResponseBody> userinfo(@Path("id") String userid, @Query("access_token") String authorization);
     @POST("/api/v1/follows")
