@@ -183,7 +183,6 @@ public class MenuActivity extends AppCompatActivity {
         public void asynchronousImageRequest(final String[] info)
         {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
