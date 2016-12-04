@@ -3,6 +3,8 @@ package com.greatsky.kitcheninpocket.object;
 import android.graphics.Bitmap;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by fangwenli on 03/12/2016.
@@ -10,56 +12,50 @@ import java.text.SimpleDateFormat;
 
 public class Recipe {
 
-    String id;
-    String create_time;
-    String picture;
-    String name;
-    String user_id;
-    String user_name;
-    Bitmap image;
+    String access_token;
+    String recipe_name;
+    String recipe_url;
+    ArrayList<Ingredients> ingredients;
+    ArrayList<String> steps;
 
-    public Recipe(String name, String id, String user_id, String user_name, String create_time,  String picture) {
-        this.name = name.substring(1, name.length()-1);
-        this.id = id;
-        this.create_time = create_time;
-        this.user_id = user_id;
-        this.user_name = user_name.substring(1, user_name.length()-1);
-        this.picture = picture.substring(1, picture.length()-1);
+
+    public Recipe(String access_token, String recipe_name, String recipe_url, ArrayList<Ingredients> ingredients, ArrayList<String> steps) {
+        this.access_token = access_token;
+        this.recipe_name = recipe_name;
+        this.recipe_url = recipe_url;
+        this.ingredients = ingredients;
+        this.steps = steps;
     }
 
-    public String getCreate_time() {
-        SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Long time = new Long(create_time);
-        time = time * 1000;
-        String d = format.format(time);
-        return d;
+    public void setRecipe_name(String recipe_name){
+        this.recipe_name = recipe_name;
     }
 
-    public String getName() {
-        return name;
+    public void setRecipe_url(String recipe_url){
+        this.recipe_url = recipe_url;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public void setIngredients(ArrayList<Ingredients> ingredients){
+        this.ingredients = ingredients;
     }
 
-    public String getPicture() {
-        return picture;
+    public void setSteps(ArrayList<String> steps){
+        this.steps = steps;
     }
 
-    public String getId() {
-        return id;
+    public String getRecipe_name(){
+        return this.recipe_name;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getRecipe_url(){
+        return this.recipe_url;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public ArrayList<Ingredients> getIngredients(){
+        return this.ingredients;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public ArrayList<String> getSteps(){
+        return this.steps;
     }
 }

@@ -7,6 +7,7 @@ import com.greatsky.kitcheninpocket.object.ChangePassword;
 import com.greatsky.kitcheninpocket.object.FavorRequest;
 import com.greatsky.kitcheninpocket.object.Follow;
 import com.greatsky.kitcheninpocket.object.FollowRequest;
+import com.greatsky.kitcheninpocket.object.Recipe;
 import com.greatsky.kitcheninpocket.object.Registration;
 import com.greatsky.kitcheninpocket.object.User;
 
@@ -64,4 +65,8 @@ public interface HerokuService {
     Call<ResponseBody> deletefavorrequest(@Body FavorRequest fr);
     @GET("/api/v1/favors")
     Call<ResponseBody> getfavors(@Query("access_token") String authorization);
+
+    //upload recipe
+    @POST("/api/v3/recipes")
+    Call<ResponseBody> uploadRecipe(@Body Recipe recipe, @Query("access_token") String authorization);
 }

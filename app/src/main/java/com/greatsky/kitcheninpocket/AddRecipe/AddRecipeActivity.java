@@ -3,15 +3,18 @@ package com.greatsky.kitcheninpocket.AddRecipe;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,17 +24,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.greatsky.kitcheninpocket.HerokuImageService;
+import com.greatsky.kitcheninpocket.HerokuService;
+import com.greatsky.kitcheninpocket.LoginActivity;
 import com.greatsky.kitcheninpocket.R;
+import com.greatsky.kitcheninpocket.RegisterActivity;
+import com.greatsky.kitcheninpocket.object.Authorization;
+import com.greatsky.kitcheninpocket.object.Ingredients;
+import com.greatsky.kitcheninpocket.object.Recipe;
+import com.greatsky.kitcheninpocket.object.Registration;
+import com.sun.jna.platform.FileUtils;
+import com.sun.jna.platform.win32.WinGDI;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okio.Buffer;
+import okio.BufferedSource;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by fangwenli on 13/11/2016.
@@ -39,7 +63,7 @@ import java.util.regex.Pattern;
 
 public class AddRecipeActivity extends Activity implements DialogInterface.OnClickListener{
 
-    ArrayList<Ingredients> items = new ArrayList<>();
+    ArrayList<Ingredients_list> items = new ArrayList<>();
     ArrayList<Steps> steps = new ArrayList<>();
     ListView listView;
     ListView step_list;
@@ -47,10 +71,21 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
     StepListAdapter stepListAdapter;
     String ingredient1;
     String amount1;
+    String upload_recipe_name;
+    ArrayList<Ingredients> upload_ingredients = new ArrayList<>();
+    ArrayList<String> upload_steps = new ArrayList<>();
+    String recipe_url;
+    String upload_recipe_result;
+    String upload_img_result;
+    EditText recipe_name;
+    Uri selectedImage;
+    SharedPreferences shared;
+    String access_token = "";
+    String returned_url;
 
     //Button btn_submit;
 
-    int click = 1;
+    int click = 0;
     private int LOAD_COVER_IMAGE = 1;
     private int REQUEST_PERMISSION = 2;
     private int LOAD_STEP_IMAGE = 3;
@@ -92,20 +127,18 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipe);
+        recipe_name = (EditText)findViewById(R.id.recipe_name);
 
-        Ingredients i1 = new Ingredients("Add ingredients", "Add amount");
-//        Ingredients i2 = new Ingredients("egg", "1");
-//        Ingredients i3 = new Ingredients("egg", "1");
+
+        Ingredients_list i1 = new Ingredients_list("Add ingredients", "Add amount");
+//        Ingredients_list i2 = new Ingredients_list("egg", "1");
+//        Ingredients_list i3 = new Ingredients_list("egg", "1");
         items.add(i1);
-
 
         //btn_submit = (Button)findViewById(R.id.btn_submit);
 
 //        items.add(i2);
 //        items.add(i3);
-
-
-
 
         listView = (ListView)findViewById(R.id.ingredient_list);
         ingredientListAdapter = new IngredientListAdapter(AddRecipeActivity.this, items);
@@ -115,14 +148,13 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 
         listView.setAdapter(ingredientListAdapter);
 
-        Steps step1 = new Steps("1", R.drawable.step_picture);
+        Steps step1 = new Steps("steps", "Add description");
         steps.add(step1);
 
         step_list = (ListView)findViewById(R.id.step_list);
         stepListAdapter = new StepListAdapter(AddRecipeActivity.this, steps);
         refreshListview2();
         step_list.setAdapter(stepListAdapter);
-
 
     }
 
@@ -154,17 +186,13 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 //        }
 //    }
 
-    public void addStepPicture(View view){
-//        Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        startActivityForResult(i, LOAD_STEP_IMAGE);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
         if (requestCode == LOAD_COVER_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
+            selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
             cursor.moveToFirst();
@@ -178,20 +206,6 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
             cover_pic.setScaleType(ImageButton.ScaleType.FIT_XY);
         }
 
-//        else if (requestCode == LOAD_STEP_IMAGE && resultCode == RESULT_OK && null != data){
-//            Uri selectedImage = data.getData();
-//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-//            cursor.moveToFirst();
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            String picturePath = cursor.getString(columnIndex);
-//            cursor.close();
-//            ImageButton cover_pic = (ImageButton) findViewById(R.id.step_image);
-//            Bitmap original_bitmap = BitmapFactory.decodeFile(picturePath);
-//            Bitmap scaled_bitmap = Bitmap.createScaledBitmap(original_bitmap,1000,180,false);
-//            cover_pic.setImageBitmap(scaled_bitmap);
-//            cover_pic.setScaleType(ImageButton.ScaleType.FIT_XY);
-//        }
         super.onActivityResult(requestCode, resultCode, data);
 
     }
@@ -240,7 +254,7 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
             EditText t1 = (EditText) ad.findViewById(R.id.dialog_edit1);
             EditText t2 = (EditText) ad.findViewById(R.id.dialog_edit2);
 
-            Ingredients tempData = new Ingredients();
+            Ingredients_list tempData = new Ingredients_list();
             tempData.setIngredient(t1.getText().toString());
             tempData.setAmount(t2.getText().toString());
             items.add(tempData);
@@ -249,8 +263,7 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 
             refreshListview();
             
-            Toast.makeText(this, t1.getText().toString(), Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(this, t1.getText().toString(), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -264,18 +277,204 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 
     public void addSteps(View view){
         click++;
-        Steps tempData = new Steps();
-        tempData.setStep_num(Integer.toString(click));
-        tempData.setImage_source(R.drawable.step_picture);
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.step_dialog, (ViewGroup) findViewById(R.id.step_dialog));
 
-        steps.add(tempData);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add more steps.");
 
-        stepListAdapter.notifyDataSetChanged();
-        refreshListview2();
+        builder.setView(layout);
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+                // here you can add functions
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+                // here you can add functions
+                AlertDialog ad = (AlertDialog) dialog;
+                EditText e1 = (EditText) ad.findViewById(R.id.dialog_step_edit1);
+
+                Steps tempData = new Steps();
+                tempData.setStep_num(Integer.toString(click));
+                tempData.setDescription(e1.getText().toString());
+                steps.add(tempData);
+
+                stepListAdapter.notifyDataSetChanged();
+
+                refreshListview2();
+                Toast.makeText(getBaseContext(), e1.getText().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
-    public void submitRecipe(View view){
+    public void submitRecipe(View view) throws IOException {
+        uploadFile(selectedImage);
 
+        upload_recipe_name = recipe_name.getText().toString();
+        //recipe_url
+
+        for (int i = 1; i<items.size();i++)
+        {
+            Ingredients ingredients = new Ingredients();
+            ingredients.setName(items.get(i).getIngredient());
+            ingredients.setAmount(items.get(i).getAmount());
+            upload_ingredients.add(ingredients);
+        }
+
+        for (Steps step : steps)
+        {
+            upload_steps.add(step.getDescription());
+        }
+
+        uploadRecipeRequest();
+    }
+
+    protected void uploadRecipeRequest()
+    {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        HerokuService restAPI = retrofit.create(HerokuService.class);
+
+        shared = getSharedPreferences("login", Context.MODE_PRIVATE);
+        access_token = shared.getString("access_token", "");
+
+        Recipe recipe = new Recipe(access_token, upload_recipe_name, returned_url, upload_ingredients, upload_steps);
+        Call<ResponseBody> call = restAPI.uploadRecipe(recipe, access_token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Log.e("===","return:" + response.body().toString());
+                BufferedSource source = response.body().source();
+                try {
+                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Buffer buffer = source.buffer();
+                upload_recipe_result = buffer.clone().readString(Charset.forName("UTF-8"));
+                afterUploadRecipe();
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("===","failed");
+            }
+        });
+
+    }
+
+    public void afterUploadRecipe()
+    {
+        if(upload_recipe_result.contains("success")) {
+//            Intent intent = new Intent(AddRecipeActivity.this, Recipe.class);
+//            startActivity(intent);
+        }
+        else
+        if(upload_recipe_result.contains("error"))
+        {
+            String[] msg = upload_recipe_result.split("\"");
+            Toast.makeText(AddRecipeActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void uploadFile(Uri fileUri) throws IOException {
+        // create upload service client
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
+                .build();
+        HerokuImageService service = retrofit.create(HerokuImageService.class);
+
+        String real_path = getRealFilePath(this, selectedImage);
+        File file = new File(real_path);
+        long length = file.length();
+
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("image/jpeg"), file);
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        String descriptionString = "hello";
+        RequestBody description =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"), descriptionString );
+
+        Call<ResponseBody> call = service.upload_recipe_picture(requestFile);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.v("Upload", "success");
+
+                BufferedSource source = response.body().source();
+                try {
+                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Buffer buffer = source.buffer();
+                upload_img_result = buffer.clone().readString(Charset.forName("UTF-8"));
+                afterUploadImage();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
+
+    public void afterUploadImage()
+    {
+        if(upload_img_result.contains("success")) {
+
+            String temp = upload_img_result.replaceAll("http://kitchen-in-pocket.herokuapp.com/", "lalalala");
+            String[] xyz = temp.split("lalalala");
+            returned_url = xyz[1].substring(0, xyz[1].length()-5);
+
+        }
+        else if(upload_img_result.contains("error"))
+        {
+            String[] msg = upload_recipe_result.split("\"");
+            Toast.makeText(AddRecipeActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static String getRealFilePath( final Context context, final Uri uri ) {
+        if ( null == uri ) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if ( scheme == null )
+            data = uri.getPath();
+        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+            data = uri.getPath();
+        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
+            if ( null != cursor ) {
+                if ( cursor.moveToFirst() ) {
+                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
+                    if ( index > -1 ) {
+                        data = cursor.getString( index );
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
     }
 
 }
