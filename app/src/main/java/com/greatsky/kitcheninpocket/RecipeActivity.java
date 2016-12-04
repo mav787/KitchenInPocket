@@ -100,7 +100,7 @@ public class RecipeActivity extends Activity{
             TextView id = (TextView) convertView.findViewById(R.id.step_item_id);
             TextView stepcontent = (TextView)convertView.findViewById(R.id.step_item_content);
 
-            id.setText(Integer.toString(position));
+            id.setText(Integer.toString(position+1));
             stepcontent.setText(adapter.getItem(position));
 
 
@@ -147,7 +147,7 @@ public class RecipeActivity extends Activity{
         ingredient = ingredient.replaceAll("\\{|\\}", "");
         String[] ingredients = ingredient.split(":|,");
         ingredient = "";
-        int count = 0;
+        int count = 1;
         for(int i = 0; i < ingredients.length; i = i + 4)
         {
             ingredient = ingredient + count + ": " + ingredients[i+1];
