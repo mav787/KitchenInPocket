@@ -48,6 +48,8 @@ public interface HerokuService {
     Call<ResponseBody> getfollowing(@Path("id") String usesrid, @Query("access_token") String authorization);
     @GET("/api/v1/users/{id}/recipes")
     Call<ResponseBody> getrecipes(@Path("id") String usesrid, @Query("access_token") String authorization);
+    @GET("/api/v1/homeline")
+    Call<ResponseBody> gethomeline(@Query("access_token") String authorization);
     @GET("/{url}")
     Call<ResponseBody> loadimage(@Path("url") String fileUrl);
     @GET("/api/v1/users/{id}")
