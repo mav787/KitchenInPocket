@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity
     String result = "";
     String url = "";
     String userid = "";
+    String recommend_result;
+    CustomPagerAdapter mCustomPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,14 +106,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //View Pager, the image on homepage changes, weekly recommended
-        List<CustomObject> items = new ArrayList<CustomObject>();
-        items.add(new CustomObject("Homemade Cake"));
-        items.add(new CustomObject("Afternoon Tea"));
-        items.add(new CustomObject("Seafood"));
-        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, items);
-
+        List<com.greatsky.kitcheninpocket.object.Menu> recommends = new ArrayList<com.greatsky.kitcheninpocket.object.Menu>();
+//        recommends.add(new Recommended("Homemade Cake", R.drawable.first));
+//        recommends.add(new Recommended("Afternoon Tea", R.drawable.second));
+//        recommends.add(new Recommended("Seafood", R.drawable.third));
+        mCustomPagerAdapter = new CustomPagerAdapter(this);
+        mCustomPagerAdapter.access_token=access_token;
+        mCustomPagerAdapter.login=login;
         ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
-        
         mViewPager.setAdapter(mCustomPagerAdapter);
 
         //addRecipe button
@@ -146,7 +148,156 @@ public class MainActivity extends AppCompatActivity
 //            });
         }
 
+        asynchronousRequest();
+
     }
+
+    public void getRecipe(String id)
+    {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        HerokuService restAPI = retrofit.create(HerokuService.class);
+        Call<ResponseBody> call = restAPI.getrecipe(id, access_token);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Log.e("===","return:" + response.body().toString());
+                BufferedSource source = response.body().source();
+                try {
+                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Buffer buffer = source.buffer();
+                recommend_result = buffer.clone().readString(Charset.forName("UTF-8"));
+                afterGetRecipe(recommend_result);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("===","failed");
+            }
+        });
+    }
+
+    public void afterGetRecipe(String result)
+    {
+        if(result.contains("success"))
+        {
+            Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
+            if(result.contains("true"))
+                intent.putExtra("is_favor", "true");
+            else
+                intent.putExtra("is_favor", "false");
+            String[] split = result.split("\\}|\\{",5);
+            String temp = split[3].replaceAll("\"","");
+            String[] msg = temp.split(":|,");
+            for(int i = 0; i < msg.length; i= i + 2) {
+                if(msg[i].equals("picture")) {
+                    intent.putExtra(msg[i], msg[i + 1] + ":" + msg[i + 2]);
+                    i++;
+                }
+                else intent.putExtra(msg[i], msg[i + 1]);
+
+            }
+            String[]detail = split[4].split("\\[|\\]");
+            String ingredient = detail[1].replaceAll("\"","");
+            String step = detail[3].replaceAll("\"","");
+            intent.putExtra("ingredient", ingredient);
+            intent.putExtra("step", step);
+            startActivity(intent);
+        }
+        else if(result.contains("error"))
+        {
+            String[] msg = result.split("\"");
+            Toast.makeText(MainActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void asynchronousRequest()  {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://kitchen-in-pocket.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        HerokuService restAPI = retrofit.create(HerokuService.class);
+        Call<ResponseBody> call = restAPI.getRecommend();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Log.e("===","return:" + response.body().toString());
+                BufferedSource source = response.body().source();
+                try {
+                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Buffer buffer = source.buffer();
+                recommend_result = buffer.clone().readString(Charset.forName("UTF-8"));
+                handleresponse();
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("===","failed");
+            }
+        });
+    }
+
+    public void handleresponse()
+    {
+        if(recommend_result.contains("success")) {
+            String[] split = recommend_result.split("\\}|\\{");
+            int i = 3;
+            for(; i < split.length; i+= 2)
+            {
+                String[] info = split[i].split(":|,");
+                url = info[11].substring(1, info[11].length()) + ":" + info[12].substring(0,info[12].length()-1);
+                asynchronousImageRequest(info);
+            }
+        }
+        else
+        if(recommend_result.contains("error"))
+        {
+            String[] msg = recommend_result.split("\"");
+            Toast.makeText(MainActivity.this, msg[7], Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    public void asynchronousImageRequest(final String[] info)
+    {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://res.cloudinary.com/hsayf1nxm/image/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        HerokuService restAPI = retrofit.create(HerokuService.class);
+        String[] temp = url.split("image");
+        Call<ResponseBody> call = restAPI.loadimage(temp[1].substring(1, temp[1].length()));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                //Log.e("===","return:" + response.body().toString());
+                Bitmap source = BitmapFactory.decodeStream(response.body().byteStream());
+                com.greatsky.kitcheninpocket.object.Menu f = new com.greatsky.kitcheninpocket.object.Menu(info[1],info[3],info[5],info[7],info[9],info[11]);
+                f.setImage(source);
+                mCustomPagerAdapter.recommends.add(f);
+                mCustomPagerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("===","failed");
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -275,10 +426,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     //go to recipe
-    public void goToRecipe(View view){
-        Intent intent = new Intent(this, RecipeActivity.class);
-        startActivity(intent);
-    }
+//    public void goToRecipe(View view){
+//        Intent intent = new Intent(this, RecipeActivity.class);
+//        startActivity(intent);
+//    }
 
     @Override
     protected void onDestroy() {

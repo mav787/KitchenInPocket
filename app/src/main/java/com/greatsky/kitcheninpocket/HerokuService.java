@@ -71,4 +71,6 @@ public interface HerokuService {
     //upload recipe
     @POST("/api/v3/recipes")
     Call<ResponseBody> uploadRecipe(@Body Recipe recipe, @Query("access_token") String authorization);
+    @GET("/api/v1/recommend_recipes")
+    Call<ResponseBody> getRecommend();
 }
