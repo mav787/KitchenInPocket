@@ -47,11 +47,6 @@ class CustomPagerAdapter extends PagerAdapter {
     String access_token;
     String result;
     int login;
-//    int[] mResources = {
-//            R.drawable.first,
-//            R.drawable.second,
-//            R.drawable.third
-//    };
 
     public CustomPagerAdapter(Context context) {
         mContext = context;

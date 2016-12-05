@@ -410,7 +410,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onQueryTextSubmit(String query) {
         // User pressed the search button
-        return false;
+        if(login == 0) {
+            Toast.makeText(MainActivity.this, R.string.login_first, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else {
+            Intent intent = new Intent(this, SearchActivity.class);
+            intent.putExtra("keyword", query);
+            startActivity(intent);
+            return true;
+        }
     }
 
     @Override
