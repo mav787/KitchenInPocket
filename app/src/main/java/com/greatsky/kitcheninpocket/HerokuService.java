@@ -68,6 +68,8 @@ public interface HerokuService {
     @GET("/api/v1/favors")
     Call<ResponseBody> getfavors(@Query("access_token") String authorization);
 
+    @GET("/api/v1/search_recipe")
+    Call<ResponseBody> getSearchResult(@Query("access_token") String authorization, @Query("keyword") String keyword);
     //upload recipe
     @POST("/api/v3/recipes")
     Call<ResponseBody> uploadRecipe(@Body Recipe recipe, @Query("access_token") String authorization);

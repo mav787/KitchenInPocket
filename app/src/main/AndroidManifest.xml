@@ -51,6 +51,10 @@
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".SearchActivity"
+            android:label="Search Result"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".AboutUsActivity"
             android:label="@string/title_activity_about_us"
             android:theme="@style/AppTheme.NoActionBar"></activity>

@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity
 //            images.add(R.drawable.what_my_followings_did);
 //            MyListviewAdapter adapter = new MyListviewAdapter(MainActivity.this, images);
 //            listView.setAdapter(adapter);
-            mAdapter = new MenuAdapter();
-            listView.setAdapter(mAdapter);
+//            mAdapter = new MenuAdapter();
+//            listView.setAdapter(mAdapter);
 
 //            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                @Override
@@ -259,7 +259,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onQueryTextSubmit(String query) {
         // User pressed the search button
-        return false;
+        if(login == 0) {
+            Toast.makeText(MainActivity.this, R.string.login_first, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else {
+            Intent intent = new Intent(this, SearchActivity.class);
+            intent.putExtra("keyword", query);
+            startActivity(intent);
+            return true;
+        }
     }
 
     @Override

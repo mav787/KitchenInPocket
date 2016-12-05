@@ -30,6 +30,12 @@ class CustomPagerAdapter extends PagerAdapter {
             R.drawable.third
     };
 
+
+    @Override
+    public void destroyItem(View container, int position, Object object) {
+        super.destroyItem(container, position, object);
+    }
+
     public CustomPagerAdapter(Context context, List<CustomObject> items) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
