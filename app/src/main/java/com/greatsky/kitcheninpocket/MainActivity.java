@@ -152,6 +152,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+
     public void getRecipe(String id)
     {
         Retrofit retrofit = new Retrofit.Builder()
@@ -439,6 +441,8 @@ public class MainActivity extends AppCompatActivity
 //        Intent intent = new Intent(this, RecipeActivity.class);
 //        startActivity(intent);
 //    }
+
+
 
     @Override
     protected void onDestroy() {

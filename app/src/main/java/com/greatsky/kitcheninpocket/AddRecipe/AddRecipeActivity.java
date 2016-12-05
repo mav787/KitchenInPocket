@@ -95,32 +95,30 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
     public void refreshListview(){
 
         int totalHeight = 0;
-        for (int i = 0, len = ingredientListAdapter.getCount(); i < len; i++) { //listAdapter.getCount()返回数据项的数目
+        for (int i = 0, len = ingredientListAdapter.getCount(); i < len; i++) {
             View listItem = ingredientListAdapter.getView(i, null, listView);
-            listItem.measure(0, 0); //计算子项View 的宽高
-            totalHeight += listItem.getMeasuredHeight(); //统计所有子项的总高度
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (ingredientListAdapter.getCount() - 1));
-        //listView.getDividerHeight()获取子项间分隔符占用的高度
-        //params.height最后得到整个ListView完整显示需要的高度
+
         listView.setLayoutParams(params);
     }
 
     public void refreshListview2(){
 
         int totalHeight = 0;
-        for (int i = 0, len = stepListAdapter.getCount(); i < len; i++) { //listAdapter.getCount()返回数据项的数目
+        for (int i = 0, len = stepListAdapter.getCount(); i < len; i++) {
             View listItem = stepListAdapter.getView(i, null, step_list);
-            listItem.measure(0, 0); //计算子项View 的宽高
-            totalHeight += listItem.getMeasuredHeight(); //统计所有子项的总高度
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
         }
 
         ViewGroup.LayoutParams params = step_list.getLayoutParams();
         params.height = totalHeight + (step_list.getDividerHeight() * (stepListAdapter.getCount() - 1));
-        //listView.getDividerHeight()获取子项间分隔符占用的高度
-        //params.height最后得到整个ListView完整显示需要的高度
+
         step_list.setLayoutParams(params);
     }
 
@@ -132,14 +130,9 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 
 
         Ingredients_list i1 = new Ingredients_list("Add ingredients", "Add amount");
-//        Ingredients_list i2 = new Ingredients_list("egg", "1");
-//        Ingredients_list i3 = new Ingredients_list("egg", "1");
+
         items.add(i1);
 
-        //btn_submit = (Button)findViewById(R.id.btn_submit);
-
-//        items.add(i2);
-//        items.add(i3);
 
         listView = (ListView)findViewById(R.id.ingredient_list);
         ingredientListAdapter = new IngredientListAdapter(AddRecipeActivity.this, items);
@@ -330,9 +323,9 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
             upload_ingredients.add(ingredients);
         }
 
-        for (Steps step : steps)
+        for (int i = 1; i<steps.size(); i++)
         {
-            upload_steps.add(step.getDescription());
+            upload_steps.add(steps.get(i).getDescription());
         }
 
     }

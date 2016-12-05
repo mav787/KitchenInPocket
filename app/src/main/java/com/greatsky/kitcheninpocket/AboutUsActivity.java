@@ -1,6 +1,7 @@
 package com.greatsky.kitcheninpocket;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,5 +28,14 @@ public class AboutUsActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences sharedPreferences =getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("login", 0);
+        editor.commit();
     }
 }

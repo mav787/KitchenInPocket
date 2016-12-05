@@ -111,7 +111,10 @@ public class SearchActivity extends AppCompatActivity {
             if(result.contains("success"))
             {
                 Intent intent = new Intent(SearchActivity.this, RecipeActivity.class);
-                intent.putExtra("is_favor", "true");
+                if(result.contains("true"))
+                    intent.putExtra("is_favor", "true");
+                else
+                    intent.putExtra("is_favor", "false");
                 String[] split = result.split("\\}|\\{",5);
                 String temp = split[3].replaceAll("\"","");
                 String[] msg = temp.split(":|,");
@@ -278,8 +281,6 @@ public class SearchActivity extends AppCompatActivity {
         lv.setAdapter(mAdapter);
 
     }
-
-
 
 
 }
