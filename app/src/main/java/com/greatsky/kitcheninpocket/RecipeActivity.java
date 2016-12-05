@@ -121,7 +121,7 @@ public class RecipeActivity extends Activity{
         }
         ViewGroup.LayoutParams layoutParams = this.steplist.getLayoutParams();
         layoutParams.width = ViewGroup.LayoutParams.FILL_PARENT;
-        layoutParams.height = listViewHeight;
+        layoutParams.height = listViewHeight + 300;
         steplist.setLayoutParams(layoutParams);
     }
 
