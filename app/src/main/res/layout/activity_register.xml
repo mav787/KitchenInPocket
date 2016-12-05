@@ -9,13 +9,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#f7f7f0"
     tools:context="com.greatsky.kitcheninpocket.RegisterActivity">
 
 
     <ImageView
+        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:src="@drawable/register_logo"
+        android:src="@drawable/register_logo1"
         android:id="@+id/imageView3"
         android:layout_above="@+id/register_username_text"
         android:layout_alignParentStart="true"
@@ -72,7 +74,7 @@
         android:layout_below="@+id/register_repass"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
-        android:background="@color/logo_color"
+        android:background="@color/light_action_bar"
         android:textColor="@android:color/white"/>
 
     <Button
@@ -84,7 +86,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="40dp"
         android:layout_marginTop="30dp"
-        android:background="@color/logo_color"
+        android:background="@color/light_action_bar"
         android:textColor="@android:color/white"/>
 
     <EditText
