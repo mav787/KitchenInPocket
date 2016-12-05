@@ -142,7 +142,7 @@ public class AddRecipeActivity extends Activity implements DialogInterface.OnCli
 
         listView.setAdapter(ingredientListAdapter);
 
-        Steps step1 = new Steps("steps", "Add description");
+        Steps step1 = new Steps("Steps", "Add description");
         steps.add(step1);
 
         step_list = (ListView)findViewById(R.id.step_list);

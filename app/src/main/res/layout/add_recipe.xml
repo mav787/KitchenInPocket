@@ -50,10 +50,12 @@
         
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ADD"
+            android:layout_height="35dp"
+            android:text="Add more ingredients"
             android:layout_gravity="center_horizontal"
-            android:onClick="addIngredient"/>
+            android:onClick="addIngredient"
+            android:background="@android:color/transparent"
+            android:textColor="@color/light_action_bar"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -79,8 +81,8 @@
             android:layout_marginTop="10dp"
             android:text="Add more steps"
             android:onClick="addSteps"
-            android:background="@color/light_action_bar"
-            android:textColor="#fff"/>
+            android:background="@android:color/transparent"
+            android:textColor="@color/light_action_bar"/>
 
         <Button
             android:id="@+id/btn_submit"
