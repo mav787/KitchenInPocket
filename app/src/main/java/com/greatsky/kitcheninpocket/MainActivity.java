@@ -130,11 +130,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(MainActivity.this,R.string.login_first,Toast.LENGTH_SHORT).show();
         }
         else {
-//            ArrayList<Integer> images = new ArrayList<>();
-//            images.add(R.drawable.what_my_followings_did);
-//            images.add(R.drawable.what_my_followings_did);
-//            MyListviewAdapter adapter = new MyListviewAdapter(MainActivity.this, images);
-//            listView.setAdapter(adapter);
+//
             mAdapter = new MenuAdapter();
             listView.setAdapter(mAdapter);
 

@@ -281,6 +281,4 @@ public class SearchActivity extends AppCompatActivity {
         lv.setAdapter(mAdapter);
 
     }
-
-
 }

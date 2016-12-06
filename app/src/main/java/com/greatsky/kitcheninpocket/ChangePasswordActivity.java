@@ -119,4 +119,5 @@ public class ChangePasswordActivity extends AppCompatActivity {
             Toast.makeText(ChangePasswordActivity.this, msg[7], Toast.LENGTH_SHORT).show();
         }
     }
+
 }
