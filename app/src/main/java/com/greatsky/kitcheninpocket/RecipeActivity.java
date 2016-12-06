@@ -157,7 +157,8 @@ public class RecipeActivity extends Activity{
                 ingredient += " ";
                 j++;
             }
-            ingredient+= ingredients[i+3] + "\n";
+            if(i + 3 < ingredients.length)
+                ingredient+= ingredients[i+3] + "\n";
             count ++;
         }
         ingredientContent.setText(ingredient);

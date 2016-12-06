@@ -90,10 +90,10 @@ public class FollowerFragment extends Fragment {
                 convertView = (RelativeLayout)userInflater.inflate(R.layout.user_info_listview,null);
             TextView username = (TextView) convertView.findViewById(R.id.user_info_username);
             TextView createtime = (TextView)convertView.findViewById(R.id.user_info_createtime);
-            TextView intro = (TextView)convertView.findViewById(R.id.user_info_intro) ;
+            //TextView intro = (TextView)convertView.findViewById(R.id.user_info_intro) ;
             username.setText(mAdapter.getItem(position).getName());
             createtime.setText(mAdapter.getItem(position).getCreatetime());
-            intro.setText(mAdapter.getItem(position).getIntro());
+            //intro.setText(mAdapter.getItem(position).getIntro());
             return convertView;
         }
 
