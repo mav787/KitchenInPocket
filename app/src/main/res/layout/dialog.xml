@@ -8,12 +8,17 @@
         android:id="@+id/dialog_edit1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Add ingredient"/>
+        android:hint="Add ingredient"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
     <EditText
         android:id="@+id/dialog_edit2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Add amount"/>
+        android:hint="Add amount"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
 </LinearLayout>

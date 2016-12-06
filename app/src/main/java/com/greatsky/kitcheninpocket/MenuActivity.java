@@ -299,7 +299,7 @@ public class MenuActivity extends AppCompatActivity {
         shared = getSharedPreferences("login", Context.MODE_PRIVATE);
         access_token = shared.getString("access_token", "");
         mAdapter = new MenuAdapter();
-        setTitle("Menu(" + str_username +")");
+        setTitle(str_username + "'s Menu");
         lv = (ListView)findViewById(R.id.menu_listview);
 
         lv.setAdapter(mAdapter);

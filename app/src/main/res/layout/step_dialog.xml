@@ -8,6 +8,8 @@
         android:id="@+id/dialog_step_edit1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Add description"/>
+        android:hint="Add description"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
 
 </LinearLayout>
