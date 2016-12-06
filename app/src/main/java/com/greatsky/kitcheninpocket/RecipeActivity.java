@@ -149,18 +149,19 @@ public class RecipeActivity extends Activity{
         String[] ingredients = ingredient.split(":|,");
         ingredient = "";
         int count = 1;
-        for(int i = 0; i < ingredients.length; i = i + 4)
-        {
-            ingredient = ingredient + count + ": " + ingredients[i+1];
-            int j = ingredients[i+1].length();
-            while(j < 25) {
-                ingredient += " ";
-                j++;
+        if(ingredients.length > 3)
+            for(int i = 0; i < ingredients.length; i = i + 4)
+            {
+                ingredient = ingredient + count + ": " + ingredients[i+1];
+                int j = ingredients[i+1].length();
+                while(j < 25) {
+                    ingredient += " ";
+                    j++;
+                }
+                if(i + 3 < ingredients.length)
+                    ingredient+= ingredients[i+3] + "\n";
+                count ++;
             }
-            if(i + 3 < ingredients.length)
-                ingredient+= ingredients[i+3] + "\n";
-            count ++;
-        }
         ingredientContent.setText(ingredient);
 
 
