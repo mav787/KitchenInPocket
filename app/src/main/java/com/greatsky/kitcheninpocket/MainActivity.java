@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity
         }
         else {
 //
-//            mAdapter = new MenuAdapter();
-//            listView.setAdapter(mAdapter);
+            mAdapter = new MenuAdapter();
+            listView.setAdapter(mAdapter);
 
 //            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                @Override
