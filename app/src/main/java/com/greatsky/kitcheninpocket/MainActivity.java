@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity
         }
         else {
 //
-            mAdapter = new MenuAdapter();
-            listView.setAdapter(mAdapter);
+//            mAdapter = new MenuAdapter();
+//            listView.setAdapter(mAdapter);
 
 //            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                @Override
@@ -379,7 +379,8 @@ public class MainActivity extends AppCompatActivity
             else
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.login_first), Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_instruction) {
-
+            Intent intent = new Intent(MainActivity.this, InstrctionActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_aboutus) {
             Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
             startActivity(intent);

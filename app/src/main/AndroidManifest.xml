@@ -41,9 +41,10 @@
             android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MyInfoActivity" />
-        <activity android:name=".FavorActivity"
+        <activity
+            android:name=".FavorActivity"
             android:label="@string/title_activity_menu"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RecipeActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity
@@ -57,8 +58,11 @@
         <activity
             android:name=".AboutUsActivity"
             android:label="@string/title_activity_about_us"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InstrctionActivity"
+            android:label="@string/title_activity_instrction"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
     </application>
 
 </manifest>

@@ -58,4 +58,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_instrction">InstrctionActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string-array name="instruction_text">
+        <item>Before you enjoy our "Kitchen in Pocket", please register first.</item>
+        <item>After registration, you can log in to our app.</item>
+        <item>At main page you can see weekly recommeded recipes and what you and your followings recently done.</item>
+        <item>Click the plus symble then you can create your own recipe!</item>
+        <item>At my profile page, you can find your followings and followers information.</item>
+        <item>At my menu page, you can find all the recipes you created.</item>
+        <item>At my favorite dish page, you can find all the recipes you favored.</item>
+        <item>Click in one recipe, you can see all the details about that recipe.</item>
+    </string-array>
 </resources>
