@@ -9,7 +9,8 @@
         android:textSize="18dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"/>
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="5dp"/>
 
     <!--<ImageView-->
         <!--android:id="@+id/step_item_image"-->
@@ -25,6 +26,7 @@
         android:id="@+id/step_item_content"
         android:textColor="#737373"
         android:textSize="18dp"
+        android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/step_item_id"
         android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
