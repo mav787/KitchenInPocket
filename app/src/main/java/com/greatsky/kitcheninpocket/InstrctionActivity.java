@@ -57,8 +57,8 @@ public class InstrctionActivity extends AppCompatActivity {
     private static String[] restext;
 
     View view;
-    private static int[] resimage = {R.drawable.register, R.drawable.login, R.drawable.mainpage,
-    R.drawable.addrecipe, R.drawable.follow, R.drawable.mymenu, R.drawable.favoritedish, R.drawable.recipe};
+    private static int[] resimage = {R.drawable.register_1, R.drawable.login_1, R.drawable.home_img,
+    R.drawable.add_recipe, R.drawable.follow_1, R.drawable.my_menu, R.drawable.favored, R.drawable.recipe_1};
     static int pos = 0;
 
     /**
