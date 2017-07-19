@@ -9,9 +9,6 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-/**
- * Created by fangwenli on 29/11/2016.
- */
 
 public class MyListviewAdapter extends BaseAdapter {
 
