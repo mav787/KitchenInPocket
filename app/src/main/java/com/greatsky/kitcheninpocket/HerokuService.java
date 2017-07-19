@@ -26,9 +26,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
-/**
- * Created by lshbritta on 16/11/13.
- */
+
 
 public interface HerokuService {
     @Headers({
