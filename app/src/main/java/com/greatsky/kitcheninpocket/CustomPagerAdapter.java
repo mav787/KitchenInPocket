@@ -34,9 +34,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.R.color.black;
 
-/**
- * Created by fangwenli on 13/11/2016.
- */
+
 
 //the adapter to inflate the images on the homepage "Weekly Recommended"
 class CustomPagerAdapter extends PagerAdapter {
