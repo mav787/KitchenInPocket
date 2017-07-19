@@ -12,9 +12,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 
-/**
- * Created by fangwenli on 03/12/2016.
- */
 
 public interface HerokuImageService {
 //    @Headers({
