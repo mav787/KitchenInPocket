@@ -1,8 +1,6 @@
 package com.greatsky.kitcheninpocket;
 
-/**
- * Created by fangwenli on 04/12/2016.
- */
+
 
 public class Recommended {
 
